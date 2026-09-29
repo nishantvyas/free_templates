@@ -2,6 +2,8 @@
 
 Two free, single-file landing page templates. Every word is placeholder copy (Lorem Ipsum) — swap in your own.
 
+Made by [Nishant Vyas](https://www.linkedin.com/in/nishantvyas/).
+
 Live demos: [Night Shift](https://nishantvyas.github.io/free_templates/night-shift/) · [Signal](https://nishantvyas.github.io/free_templates/signal/)
 
 | Template | What it is |
