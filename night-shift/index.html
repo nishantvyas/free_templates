@@ -1,0 +1,951 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Night Shift — landing page template</title>
+<meta name="description" content="Night Shift: a free landing page template with a live console hero. Placeholder copy throughout.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --night:#060A14; --night-2:#0A1120; --night-3:#101A2D; --night-line:#1B2539;
+  --night-text:#E7EBF3; --night-muted:#8E98AB; --night-dim:#5E6A80;
+  --paper:#FFFFFF; --paper-2:#F4F6FA; --ink:#0B1220; --ink-2:#2E3747;
+  --muted:#5F6879; --line:#E1E5EC; --line-2:#CBD2DD;
+  --blue:#2563EB; --blue-press:#1D4ED8; --blue-hi:#60A5FA; --blue-soft:#93C5FD; --blue-wash:#EEF3FE;
+  --green:#15803D; --green-hi:#4ADE80;
+  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --gutter:clamp(16px,4vw,48px);
+  --max:1200px;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0}
+[hidden]{display:none!important}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.hero :focus-visible{outline-color:var(--blue-hi)}
+.wrap{max-width:var(--max);margin-inline:auto;padding-inline:var(--gutter)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.display{font-family:var(--f-display);font-stretch:82%;font-weight:780;letter-spacing:-0.022em;line-height:.98;text-wrap:balance;margin:0}
+.h2{font-size:clamp(2.1rem,1.2rem + 3vw,3.6rem)}
+.accent{color:var(--blue)}
+.nowrap{white-space:nowrap}
+.kicker{font-family:var(--f-mono);font-size:12.5px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 18px;display:flex;align-items:center;gap:10px}
+.kicker::before{content:"";width:22px;height:2px;background:var(--blue)}
+.sub{font-size:clamp(1.05rem,1rem + .3vw,1.25rem);color:var(--muted);max-width:60ch;margin:18px 0 0;text-wrap:pretty}
+.cursor{display:inline-block;width:.46em;height:.09em;background:currentColor;margin-left:.05em;animation:blink 1.15s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 22px;font-family:var(--f-body);font-weight:600;font-size:16px;text-decoration:none;border:1px solid transparent;border-radius:0;cursor:pointer;transition:background-color .2s,color .2s,border-color .2s,transform .2s}
+.btn svg{width:18px;height:18px;transition:transform .25s}
+.btn:hover svg{transform:translateX(3px)}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-primary:hover{background:var(--blue-press)}
+.btn-xl{min-height:60px;padding:0 34px;font-size:18px}
+.btn-ghost{background:transparent;color:var(--blue);border-color:var(--blue)}
+.btn-ghost:hover{background:var(--blue-wash)}
+.btn-ink{background:var(--ink);color:#fff}
+.btn-ink:hover{background:#1c2638}
+.hero{position:relative;background:var(--night);color:var(--night-text);overflow:hidden;isolation:isolate}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;z-index:-2;display:block}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(ellipse 55% 70% at 18% 52%, rgba(6,10,20,.9) 0%, rgba(6,10,20,.6) 45%, rgba(6,10,20,0) 80%),
+    linear-gradient(180deg, rgba(6,10,20,.55) 0%, rgba(6,10,20,0) 22%, rgba(6,10,20,0) 72%, rgba(6,10,20,.92) 100%)}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,rgba(96,165,250,.55) 30%,rgba(96,165,250,.55) 70%,transparent)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:18px}
+.brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;font-size:18px;letter-spacing:-.01em;color:#fff;min-height:44px}
+.brand svg{width:26px;height:26px}
+.nav-links{display:flex;align-items:center;gap:4px}
+.nav-links a{color:var(--night-muted);text-decoration:none;font-size:15px;padding:10px 12px;min-height:44px;display:inline-flex;align-items:center;transition:color .2s}
+.nav-links a:hover{color:#fff}
+.nav-links .signin{color:#fff;border:1px solid var(--night-line);margin-left:8px;padding-inline:16px}
+.nav-links .signin:hover{border-color:var(--night-muted)}
+@media (max-width:760px){.nav-links a:not(.signin){display:none}}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:clamp(36px,5vw,72px);align-items:center;padding-block:clamp(36px,6vw,88px) clamp(64px,8vw,112px)}
+@media (max-width:980px){.hero-grid{grid-template-columns:minmax(0,1fr)}}
+.status{display:inline-flex;align-items:center;gap:10px;font-family:var(--f-mono);font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--night-muted);margin:0 0 26px;padding:7px 12px;border:1px solid var(--night-line);background:rgba(10,17,32,.6)}
+.status .dot{width:7px;height:7px;border-radius:50%;background:var(--green-hi);box-shadow:0 0 0 0 rgba(74,222,128,.6);animation:pulse 2.4s ease-out infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(74,222,128,.55)}70%{box-shadow:0 0 0 9px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
+.hero-title{font-size:clamp(2.6rem,.9rem + 4.4vw,4.7rem);color:#fff}
+.hero-title .accent{color:var(--blue-hi)}
+.hero-title .cursor{color:var(--blue-hi)}
+.hero-sub{font-size:clamp(1.15rem,1rem + .6vw,1.5rem);line-height:1.45;color:#C9D0DC;margin:26px 0 0;max-width:30ch;text-wrap:balance}
+.hero-cta{display:flex;flex-wrap:wrap;align-items:center;gap:14px 24px;margin-top:38px}
+.hero-cta .try{color:var(--night-muted);font-size:15px;text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--night-line);min-height:44px;display:inline-flex;align-items:center}
+.hero-cta .try:hover{color:#fff;text-decoration-color:var(--night-muted)}
+.offer{margin:22px 0 0;font-size:15px;color:var(--night-muted);display:flex;flex-wrap:wrap;gap:6px 16px}
+.offer span{display:inline-flex;align-items:center;gap:7px}
+.offer span+span::before{content:"";width:4px;height:4px;background:var(--night-dim);margin-right:9px}
+.trust{margin:30px 0 0;padding-top:22px;border-top:1px solid var(--night-line);max-width:440px;font-size:15px;color:var(--night-muted)}
+.trust b{color:#fff;font-weight:600;font-variant-numeric:tabular-nums}
+.console{position:relative;background:rgba(10,17,32,.86);border:1px solid var(--night-line);box-shadow:0 50px 90px -40px rgba(0,0,0,.85),0 0 0 1px rgba(96,165,250,.05) inset;font-family:var(--f-mono);font-size:13px;line-height:1.55;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.console::before{content:"";position:absolute;left:-1px;right:-1px;top:-1px;height:1px;background:linear-gradient(90deg,transparent,var(--blue-hi),transparent);opacity:.7}
+.c-bar{display:flex;align-items:center;gap:10px;padding:10px 12px 10px 14px;border-bottom:1px solid var(--night-line);color:var(--night-muted);font-size:12px}
+.c-bar svg{width:16px;height:16px;color:#fff}
+.c-bar .name{color:#fff;font-weight:600}
+.c-bar .tag{margin-left:auto;padding:3px 8px;border:1px solid var(--night-line);color:var(--night-dim);letter-spacing:.06em;text-transform:uppercase;font-size:10.5px}
+.replay{background:none;border:1px solid var(--night-line);color:var(--night-muted);font:inherit;font-size:11px;padding:4px 9px;cursor:pointer;min-height:28px;display:inline-flex;align-items:center;gap:6px}
+.replay:hover{color:#fff;border-color:var(--night-muted)}
+.replay svg{width:12px;height:12px;color:currentColor}
+.c-body{padding:16px 16px 18px;display:grid;gap:11px}
+.you{display:flex;gap:10px;align-items:baseline;padding:10px 12px;background:var(--night-3);border-left:2px solid var(--blue-hi);color:#fff;font-family:var(--f-body);font-size:15px;line-height:1.45}
+.you .who{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue-hi);flex:none}
+.step{display:grid;grid-template-columns:40px 16px minmax(0,1fr);gap:8px;align-items:start;color:var(--night-text);transition:opacity .35s ease,transform .35s ease}
+.step time{color:var(--night-dim);font-variant-numeric:tabular-nums}
+.mk{position:relative;display:inline-block;width:14px;height:14px;margin-top:3px}
+.mk .ok{position:absolute;inset:0;color:var(--green-hi)}
+.mk .spin{position:absolute;inset:1px;border:1.5px solid rgba(96,165,250,.25);border-top-color:var(--blue-hi);border-radius:50%;opacity:0;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.step.run .ok{opacity:0}.step.run .spin{opacity:1}
+.step.q{opacity:0;transform:translateY(6px)}
+.step .d{display:block;color:var(--night-muted);font-size:12px}
+.gap-chip{display:inline-block;font-family:var(--f-mono);font-size:11.5px;color:var(--blue-hi);background:rgba(96,165,250,.1);border:1px dashed rgba(96,165,250,.6);padding:0 5px;white-space:nowrap}
+.ready{margin-top:4px;border:1px solid var(--night-line);background:rgba(6,10,20,.55);transition:opacity .45s ease,transform .45s ease}
+.ready.q{opacity:0;transform:translateY(8px)}
+.ready-h{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-bottom:1px solid var(--night-line);color:#fff;font-size:12px}
+.ready-h span:last-child{color:var(--night-dim)}
+.entry{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:9px 12px;font-family:var(--f-body);font-size:14px}
+.entry+.entry{border-top:1px solid var(--night-line)}
+.entry b{display:block;color:#fff;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.entry small{display:block;color:var(--night-muted);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pct{font-family:var(--f-display);font-stretch:85%;font-weight:700;font-size:20px;color:#fff;font-variant-numeric:tabular-nums}
+.yn{display:flex;gap:4px}
+.yn span{width:28px;height:28px;display:grid;place-items:center;border:1px solid var(--night-line);color:var(--night-muted)}
+.yn span svg{width:13px;height:13px}
+.yn span:first-child{color:var(--green-hi);border-color:rgba(74,222,128,.35)}
+.c-foot{padding:10px 14px;border-top:1px solid var(--night-line);color:var(--night-dim);font-size:11px;display:flex;justify-content:space-between;gap:10px}
+.c-foot .caret{color:var(--blue-hi)}
+@media (max-width:480px){.console{font-size:12.5px}.step{grid-template-columns:36px 14px minmax(0,1fr)}.entry{grid-template-columns:minmax(0,1fr) auto}.entry .yn{display:none}}
+.sec{padding-block:clamp(72px,9vw,128px)}
+.alt{background:var(--paper-2)}
+.sec-head{max-width:760px;margin-bottom:clamp(40px,5vw,64px)}
+.meet-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(32px,6vw,96px);align-items:start}
+.meet-head{position:sticky;top:32px}
+.eyebrow-sent{font-size:clamp(1.05rem,1rem + .3vw,1.25rem);color:var(--muted);margin:0 0 16px}
+.meet-body{display:grid;gap:22px;font-size:clamp(1.12rem,1rem + .45vw,1.4rem);line-height:1.55;color:var(--ink-2);max-width:36em}
+.meet-body p{margin:0;text-wrap:pretty}
+.meet-body strong{color:var(--ink);font-weight:650}
+.lead-in{font-family:var(--f-display);font-stretch:85%;font-weight:800;font-size:1.28em;letter-spacing:-.015em;color:var(--ink);white-space:nowrap}
+.big-figure{padding-block:22px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);color:var(--ink)!important}
+.big-figure .big{font-family:var(--f-display);font-stretch:78%;font-weight:800;font-size:clamp(2.6rem,1.8rem + 3vw,4.4rem);line-height:1;letter-spacing:-.03em;display:block;margin-block:8px 4px;font-variant-numeric:tabular-nums}
+@media (max-width:860px){.meet-grid{grid-template-columns:minmax(0,1fr)}.meet-head{position:static}}
+.tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line-2);margin-bottom:clamp(28px,4vw,48px)}
+.tab{appearance:none;background:none;border:0;border-top:3px solid transparent;margin-top:-2px;padding:18px 18px 16px 0;text-align:left;font:inherit;color:var(--muted);cursor:pointer;min-height:44px;transition:color .2s,border-color .2s}
+.tab b{display:block;font-family:var(--f-display);font-stretch:88%;font-weight:720;font-size:clamp(1.2rem,1rem + .6vw,1.55rem);letter-spacing:-.01em;color:var(--ink-2);line-height:1.1}
+.tab span{display:block;font-size:14.5px;margin-top:6px;line-height:1.4}
+.tab:hover b{color:var(--ink)}
+.tab[aria-selected="true"]{border-top-color:var(--blue)}
+.tab[aria-selected="true"] b{color:var(--ink)}
+@media (max-width:760px){
+  .tabs-scroll{overflow-x:auto;contain:paint;margin-inline:calc(var(--gutter) * -1);padding-inline:var(--gutter);scrollbar-width:none}
+  .tabs-scroll::-webkit-scrollbar{display:none}
+  .tabs{grid-template-columns:repeat(4,minmax(150px,1fr));min-width:640px}
+}
+.panel{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(28px,5vw,72px);align-items:start;animation:panelIn .45s ease}
+@keyframes panelIn{from{opacity:.001;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (max-width:900px){.panel{grid-template-columns:minmax(0,1fr)}}
+.panel h3{font-family:var(--f-display);font-stretch:85%;font-weight:760;font-size:clamp(1.6rem,1.2rem + 1.4vw,2.3rem);line-height:1.05;letter-spacing:-.018em;margin:0 0 20px;text-wrap:balance}
+.chip{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--blue);border:1px solid rgba(37,99,235,.35);background:var(--blue-wash);padding:4px 8px;margin-bottom:16px}
+.does{list-style:none;margin:0;padding:0;display:grid;gap:16px}
+.does li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:12px;color:var(--ink-2);font-size:16.5px;line-height:1.55}
+.does li svg{width:18px;height:18px;margin-top:4px;color:var(--blue)}
+.does code{font-family:var(--f-mono);font-size:.84em;color:var(--blue);background:var(--blue-wash);border:1px dashed rgba(37,99,235,.45);padding:1px 5px;white-space:nowrap}
+.mock{background:#fff;border:1px solid var(--line-2);box-shadow:0 40px 70px -45px rgba(11,18,32,.45),0 2px 0 rgba(11,18,32,.03)}
+.m-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 16px;border-bottom:1px solid var(--line);font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.m-bar .t{color:var(--ink);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.m-bar .ex{flex:none;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);padding:2px 7px}
+.m-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px 16px;border-top:1px solid var(--line);background:var(--paper-2);font-size:14px;color:var(--muted)}
+.sheet{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)}
+@media (max-width:640px){.sheet{grid-template-columns:minmax(0,1fr)}}
+.doc{padding:22px 22px 18px;font-size:14.5px;line-height:1.55;color:var(--ink-2)}
+.doc-title{font-family:var(--f-display);font-stretch:90%;font-weight:760;font-size:22px;color:var(--ink);letter-spacing:-.01em}
+.doc-meta{color:var(--muted);font-size:13.5px}
+.doc-h{margin:16px 0 8px;font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:4px}
+.doc-sub{display:flex;justify-content:space-between;gap:10px;color:var(--ink);font-size:14px}
+.doc-sub span{color:var(--muted);font-size:13px;white-space:nowrap}
+.doc ul{margin:8px 0 0;padding-left:16px;display:grid;gap:7px}
+.doc li::marker{color:var(--line-2)}
+.chg{background:linear-gradient(transparent 62%,rgba(37,99,235,.14) 62%)}
+.doc .gap-chip{color:var(--blue);background:var(--blue-wash);border-color:rgba(37,99,235,.5);font-size:11.5px}
+.stub-list{border-left:1px solid var(--line);padding:22px 18px;background:repeating-linear-gradient(0deg,transparent 0 27px,rgba(203,210,221,.35) 27px 28px),#FBFCFE;font-size:14px}
+@media (max-width:640px){.stub-list{border-left:0;border-top:1px solid var(--line)}}
+.stub-list h4{margin:0 0 12px;font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);font-weight:600}
+.stub-list ol{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.stub-list li{display:grid;grid-template-columns:18px minmax(0,1fr);gap:8px;color:var(--ink-2);line-height:1.45}
+.stub-list li i{font-style:normal;font-family:var(--f-mono);color:var(--blue);font-size:13px}
+.stub-list li.none i{color:var(--green)}
+.stub-list li.none b{color:var(--green)}
+.stub-list li.need i{color:var(--muted)}
+.lock{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--line-2);color:var(--muted);background:#fff;font-weight:600;font-size:14px}
+.lock svg{width:14px;height:14px}
+.row-sum{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px 16px;border-bottom:1px solid var(--line);font-size:14px;color:var(--muted)}
+.row-sum b{color:var(--ink);font-variant-numeric:tabular-nums}
+.row-item{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:14px;align-items:center;padding:14px 16px}
+.row-item+.row-item,.why+.row-item{border-top:1px solid var(--line)}
+.row-item b{display:block;color:var(--ink);font-weight:650;font-size:15.5px}
+.row-item small{display:block;color:var(--muted);font-size:13.5px}
+.row-pct{font-family:var(--f-display);font-stretch:82%;font-weight:780;font-size:28px;letter-spacing:-.02em;color:var(--ink);font-variant-numeric:tabular-nums;line-height:1}
+.row-pct.top{color:var(--blue)}
+.row-yn{display:flex;gap:6px}
+.row-yn span{width:36px;height:36px;display:grid;place-items:center;border:1px solid var(--line-2);color:var(--muted)}
+.row-yn span svg{width:16px;height:16px}
+.row-yn .y{color:var(--green);border-color:rgba(21,128,61,.4)}
+.why{margin:0 16px 16px;border:1px solid var(--line);background:var(--paper-2);padding:14px 14px 12px}
+.why h5{margin:0 0 12px;font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);font-weight:600}
+.meter{display:grid;grid-template-columns:62px minmax(0,1fr) auto;gap:12px;align-items:center;font-size:13.5px;margin-bottom:10px}
+.meter .lbl{color:var(--ink);font-weight:600}
+.meter .val{color:var(--muted);font-variant-numeric:tabular-nums;font-family:var(--f-mono);font-size:12px}
+.bar{height:6px;background:#E3E8F0;position:relative}
+.bar i{position:absolute;inset:0 auto 0 0;background:var(--blue)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 12px 74px}
+.chips span{font-family:var(--f-mono);font-size:11.5px;padding:3px 7px;border:1px solid var(--line-2);background:#fff;color:var(--ink-2);display:inline-flex;gap:5px;align-items:center}
+.chips span.have::before{content:"✓";color:var(--green)}
+.chips span.gap{color:var(--muted);border-style:dashed;background:transparent}
+.score-note{margin:0 0 12px 74px;font-size:13.5px;color:var(--ink-2);line-height:1.45}
+.filters{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;padding-top:10px;border-top:1px dashed var(--line-2);font-size:12.5px;color:var(--muted)}
+.filters span{font-family:var(--f-mono);font-size:11.5px;color:var(--ink-2);background:#fff;border:1px solid var(--line);padding:2px 7px}
+@media (max-width:520px){.chips,.score-note{margin-left:0}.row-item{grid-template-columns:minmax(0,1fr) auto}.row-item .row-yn{grid-column:1/-1}}
+.card-b{padding:16px;display:grid;gap:14px}
+.score-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.score-grid div{background:#fff;padding:10px 12px}
+.score-grid small{display:block;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.score-grid b{font-family:var(--f-display);font-stretch:85%;font-weight:760;font-size:24px;color:var(--ink);font-variant-numeric:tabular-nums}
+.score-grid .cur{box-shadow:inset 0 -3px 0 var(--blue)}
+@media (max-width:520px){.score-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.rw-pair{border:1px solid var(--line)}
+.rw-pair .row{display:grid;grid-template-columns:70px minmax(0,1fr);gap:12px;padding:12px 14px;font-size:14.5px;line-height:1.45}
+.rw-pair .row+.row{border-top:1px solid var(--line)}
+.rw-pair .row small{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+.rw-pair .before{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line-2)}
+.rw-pair .after{color:var(--ink);font-weight:600}
+.rw-note{border:1px solid var(--line);background:var(--paper-2);padding:12px 14px;font-size:14.5px;line-height:1.5;color:var(--ink-2)}
+.rw-note small{display:block;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.rw-note .act{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:10px;font-size:13px;color:var(--muted)}
+.rw-note .act span:first-child{font-weight:600;color:var(--blue);border:1px solid rgba(37,99,235,.4);padding:5px 10px;background:#fff}
+.form{padding:16px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:520px){.form{grid-template-columns:minmax(0,1fr)}}
+.fld{display:grid;gap:5px}
+.fld.full{grid-column:1/-1}
+.fld label{font-size:12.5px;color:var(--muted);font-weight:500}
+.fld .in{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:40px;padding:8px 11px;border:1px solid var(--line-2);font-size:14.5px;color:var(--ink);background:#fff}
+.fld .in svg{width:15px;height:15px;color:var(--green);flex:none}
+.fld .in .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fld.left .in{border:1px dashed var(--blue);background:var(--blue-wash);color:var(--blue);font-size:13.5px;min-height:64px;align-items:flex-start}
+.submit{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;background:var(--ink);color:#fff;font-weight:600;font-size:14px}
+.m-foot .you-note{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
+.why-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end;margin-bottom:clamp(36px,4vw,56px)}
+@media (max-width:760px){.why-head{grid-template-columns:minmax(0,1fr)}}
+.src{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;color:var(--muted);border:1px solid var(--line);padding:8px 12px;max-width:34ch}
+.wall{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;height:600px;overflow:hidden;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 9%,#000 88%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 9%,#000 88%,transparent 100%)}
+.col{display:flex;flex-direction:column;gap:16px;animation:rise var(--dur,70s) linear infinite}
+.col:nth-child(2){--dur:88s;animation-delay:-20s}
+.col:nth-child(3){--dur:78s;animation-delay:-41s}
+.wall:hover .col{animation-play-state:paused}
+@keyframes rise{from{transform:translateY(0)}to{transform:translateY(calc(-50% - 8px))}}
+.q{margin:0;padding:20px 20px 16px;background:var(--paper-2);border:1px solid var(--line)}
+.q:nth-child(3n+2){background:#fff}
+.q:nth-child(5n+4){background:var(--night);border-color:var(--night);}
+.q:nth-child(5n+4) blockquote{color:#E7EBF3}
+.q:nth-child(5n+4) figcaption{color:var(--night-muted)}
+.q blockquote{margin:0;font-size:15.5px;line-height:1.55;color:var(--ink-2);text-wrap:pretty}
+.q figcaption{margin-top:12px;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.04em;color:var(--muted)}
+@media (max-width:900px){.wall{grid-template-columns:repeat(2,minmax(0,1fr))}.col:nth-child(3){display:none}}
+@media (max-width:600px){.wall{grid-template-columns:minmax(0,1fr);height:540px}.col:nth-child(2){display:none}}
+.cmp-scroll{overflow-x:auto;contain:paint;border:1px solid var(--line-2);background:#fff}
+.cmp{width:100%;min-width:780px;border-collapse:collapse;font-size:15px}
+.cmp th,.cmp td{padding:15px 16px;text-align:left;vertical-align:middle;border-bottom:1px solid var(--line)}
+.cmp thead th{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--paper-2)}
+.cmp tbody th{font-weight:600;color:var(--ink);position:sticky;left:0;background:#fff;z-index:1;min-width:170px}
+.cmp td{color:var(--muted)}
+.cmp .d{background:var(--blue-wash);color:var(--ink);font-weight:600;border-left:1px solid rgba(37,99,235,.2)}
+.cmp thead .d{background:var(--ink);color:#fff;font-family:var(--f-display);font-stretch:88%;font-size:17px;letter-spacing:-.005em;text-transform:none;font-weight:760}
+.cmp tr:last-child th,.cmp tr:last-child td{border-bottom:0}
+.cmp .cost td{font-weight:600;color:var(--ink-2)}
+.cmp .cost .d{color:var(--blue);font-family:var(--f-display);font-stretch:88%;font-size:19px;font-weight:780}
+.ic{display:inline-flex;align-items:center;gap:7px}
+.ic svg{width:16px;height:16px;flex:none}
+.ic.y svg{color:var(--green)}
+.cmp .d .ic.y svg{color:var(--blue)}
+.ic.n svg{color:#A3ACBA}
+.cmp-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;margin-top:32px}
+.cmp-foot p{margin:0;font-family:var(--f-display);font-stretch:88%;font-weight:720;font-size:clamp(1.3rem,1.1rem + .8vw,1.8rem);letter-spacing:-.012em;color:var(--ink);text-wrap:balance;max-width:28ch}
+.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--line-2);background:#fff}
+@media (max-width:900px){.plans{grid-template-columns:minmax(0,1fr)}}
+.plan{padding:28px 26px 26px;display:flex;flex-direction:column;gap:18px;position:relative}
+.plan+.plan{border-left:1px solid var(--line-2)}
+@media (max-width:900px){.plan+.plan{border-left:0;border-top:1px solid var(--line-2)}}
+.plan.hl{background:var(--night);color:var(--night-text);margin:-1px;border:1px solid var(--night)}
+.plan-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.plan-name{font-family:var(--f-display);font-stretch:88%;font-weight:760;font-size:22px;letter-spacing:-.01em}
+.badge{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;padding:4px 8px;border:1px solid var(--line-2);color:var(--muted)}
+.badge.free{color:var(--green);border-color:rgba(21,128,61,.35)}
+.plan.hl .badge{color:var(--blue-hi);border-color:rgba(96,165,250,.45)}
+.plan-price{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.plan-price b{font-family:var(--f-display);font-stretch:78%;font-weight:800;font-size:52px;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.plan-price span{font-size:14px;color:var(--muted)}
+.plan.hl .plan-price span{color:var(--night-muted)}
+.plan .desc{margin:-8px 0 0;color:var(--muted);font-size:15px}
+.plan.hl .desc{color:var(--night-muted)}
+.plan ul{list-style:none;margin:0;padding:18px 0 0;border-top:1px solid var(--line);display:grid;gap:11px;font-size:15px;flex:1}
+.plan.hl ul{border-top-color:var(--night-line)}
+.plan li{display:grid;grid-template-columns:18px minmax(0,1fr);gap:10px;line-height:1.45}
+.plan li svg{width:16px;height:16px;margin-top:3px;color:var(--blue)}
+.plan.hl li svg{color:var(--blue-hi)}
+.plan li.x{color:var(--muted)}
+.plan li.x svg{color:#A3ACBA}
+.plan .note{font-size:13px;color:var(--muted);margin:0}
+.plan.hl .note{color:var(--night-muted)}
+.plan .btn{width:100%}
+.plan.hl .btn-ghost{color:#fff;border-color:var(--night-line)}
+.plan.hl .btn-ghost:hover{background:var(--night-3);border-color:var(--night-muted)}
+.partner{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(28px,5vw,72px);align-items:end}
+@media (max-width:860px){.partner{grid-template-columns:minmax(0,1fr)}}
+.partner h2{font-size:clamp(1.8rem,1.1rem + 2.2vw,2.9rem)}
+.partner p{margin:20px 0 0;font-size:clamp(1.05rem,1rem + .3vw,1.2rem);color:var(--ink-2);max-width:52ch;text-wrap:pretty}
+.partner-side{display:flex}
+.close{text-align:left}
+.close-in{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:32px 48px;align-items:end}
+@media (max-width:860px){.close-in{grid-template-columns:minmax(0,1fr)}}
+.close h2{font-size:clamp(2.4rem,1.3rem + 4vw,4.8rem)}
+.close h2 .cursor{color:var(--blue)}
+.close p{margin:18px 0 0;font-size:clamp(1.05rem,1rem + .35vw,1.25rem);color:var(--muted);max-width:44ch}
+.close .micro{margin-top:16px;font-size:14px;color:var(--muted)}
+footer{background:var(--night);color:var(--night-muted);font-size:14.5px}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;padding-block:36px}
+.foot nav{display:flex;flex-wrap:wrap;gap:4px 8px}
+.foot nav a{text-decoration:none;color:var(--night-muted);padding:10px 8px;min-height:44px;display:inline-flex;align-items:center}
+.foot nav a:hover{color:#fff}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .cursor{animation:none}
+  .col{animation:none}
+  .wall{height:auto;max-height:720px}
+}
+</style>
+
+<header class="hero" id="top">
+  <canvas id="field" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <nav class="nav" aria-label="Ante">
+      <a class="brand" href="#top" aria-label="Lorem nisi">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2" y="3" width="20" height="18" rx="2" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/></svg>
+        Lorem
+      </a>
+      <div class="nav-links">
+        <a href="#work">Amet ex anim</a>
+        <a href="#pricing">Posuere</a>
+        <a href="#partners">Qui integer</a>
+        <a class="signin" href="#">Esse id</a>
+      </div>
+    </nav>
+
+    <div class="hero-grid">
+      <div>
+        <p class="status"><span class="dot" aria-hidden="true"></span>Do ante labore nec magna</p>
+        <h1 class="display hero-title">Ac <span class="accent nowrap">EX Labore Egestas</span>, Egestas qui Sed<span class="cursor" aria-hidden="true"></span></h1>
+        <p class="hero-sub">Ex anim nec labore quis, id sed nec ut sunt orci quis.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary btn-xl" href="#">Nec Gravida Esse
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg>
+          </a>
+          <a class="try" href="#">Sit ex eiusmod varius</a>
+        </div>
+        <p class="offer"><span>Ac veniam eros maecenas</span><span>5 gravida esse EX veniam, curae velit, qui sint</span></p>
+        <p class="trust">Eros ante <b>10,000</b> reprehenderit incididunt.</p>
+      </div>
+
+      <div class="console" role="group" aria-label="Integer gravida odio sunt labore egestas">
+        <div class="c-bar">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2" y="3" width="20" height="18" rx="2" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/></svg>
+          <span class="name">sunt egestas</span>
+          <span class="tag">Integer · Excepteur &amp; Posuere</span>
+          <button class="replay" type="button" id="replay" aria-label="Aliqua nec integer gravida">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.3-5.6M4 4v4h4" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg>Aliqua
+          </button>
+        </div>
+        <div class="c-body">
+          <div class="you"><span class="who">Sed</span><span>“E esse e aliqua ultricies amet. Nec Quis ex nullam.”</span></div>
+
+          <div class="step" data-step><time>21:02</time><span class="mk"><span class="spin"></span><span class="ok">✓</span></span>
+            <span>Sint sunt veniam non Proident<span class="d">6 donec · 31 mollit, eros non lacus</span></span></div>
+          <div class="step" data-step><time>21:03</time><span class="mk"><span class="spin"></span><span class="ok">✓</span></span>
+            <span>Maecenas lacus occaecat<span class="d">Nec Quis ex nullam · 212 egestas sunt laborum</span></span></div>
+          <div class="step" data-step><time>21:07</time><span class="mk"><span class="spin"></span><span class="ok">✓</span></span>
+            <span>Sint 40 id nisi laboris sunt ullamco<span class="d">3 lorem sunt 80% sit</span></span></div>
+          <div class="step" data-step><time>21:10</time><span class="mk"><span class="spin"></span><span class="ok">✓</span></span>
+            <span>Habitant sunt veniam qui Laboris Donec Fugiat<span class="d">1 aute tempor sunt sed: <span class="gap-chip">[[EIUSMOD: non nec labore]]</span></span></span></div>
+          <div class="step" data-step><time>21:12</time><span class="mk"><span class="spin"></span><span class="ok">✓</span></span>
+            <span>Laboris e nulla veniam sunt sunt sunt quis<span class="d">Eiusmod senectus</span></span></div>
+
+          <div class="ready" data-step>
+            <div class="ready-h"><span>Nulla qui sunt ✓ / ✗</span><span>3 donec</span></div>
+            <div class="entry"><div><b>Aliqua Ante Officia</b><small>Laboris Donec Fugiat · Nullam (AD)</small></div><span class="pct">91%</span>
+              <span class="yn" aria-hidden="true"><span><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg></span><span><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg></span></span></div>
+            <div class="entry"><div><b>Ultricies Amet</b><small>Nulla Hendrerit · Nec Consequat</small></div><span class="pct">86%</span>
+              <span class="yn" aria-hidden="true"><span><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg></span><span><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg></span></span></div>
+            <div class="entry"><div><b>Aliqua Gravida Officia</b><small>Proident Accumsan · Nullam (AD)</small></div><span class="pct">82%</span>
+              <span class="yn" aria-hidden="true"><span><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg></span><span><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg></span></span></div>
+          </div>
+        </div>
+        <div class="c-foot"><span>Eiusmod et orci eiusmod sed <span class="caret">_</span></span><span>Pellentesque · malesuada hendrerit</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section class="sec" id="meet">
+  <div class="wrap meet-grid">
+    <div class="meet-head">
+      <p class="eyebrow-sent">Donec officia sed irure odio esse.</p>
+      <h2 class="display h2">Ante Sunt <span class="accent">Labore Egestas</span></h2>
+    </div>
+    <div class="meet-body">
+      <p>Sunt turpis ex proident, sunt Enim ex condimentum, nec anim adipiscing mauris id nec nulla felis non lacus id luctus: <span class="lead-in">esse interdum.</span></p>
+      <p>Esse enim mauris — AC consectetur, labore integer, commodo eiusmod, nulla senectus — sed egestas luctus nec turpis ex quisque ipsum nullam non vestibulum ipsum quisque.</p>
+      <p class="big-figure">Enim esse ea esse odio <span class="big">$10,000+</span> e velit do maecenas.</p>
+      <p>Lorem curae sed ac <strong>EX labore egestas</strong> qui anim enim quis — do ante labore nec magna, deserunt esse.</p>
+      <p>Amet elit enim, sed nec ex <strong>ipsum do sunt felis</strong> — curae sunt labore egestas minim do adipiscing quis.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec alt" id="work">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kicker">Amet ex anim</p>
+      <h2 class="display h2">Nec labore quis, ante qui sed</h2>
+      <p class="sub">Adipiscing ex semper dolore sunt sunt sunt quis. Sunt netus, minim senectus amet.</p>
+    </div>
+
+    <div class="tabs-scroll">
+      <div class="tabs" role="tablist" aria-label="Amet sunt labore egestas anim">
+        <button class="tab" role="tab" id="t-one" aria-controls="p-one" aria-selected="true"><b>Veniam</b><span>Habitant, minim senectus</span></button>
+        <button class="tab" role="tab" id="t-four" aria-controls="p-four" aria-selected="false" tabindex="-1"><b>Velit Turpis</b><span>Nec duis velit sunt elit</span></button>
+        <button class="tab" role="tab" id="t-two" aria-controls="p-two" aria-selected="false" tabindex="-1"><b>Proident</b><span>Felis do nec fames mauris</span></button>
+        <button class="tab" role="tab" id="t-three" aria-controls="p-three" aria-selected="false" tabindex="-1"><b>Maecenas</b><span>Netus dolore, sed luctus</span></button>
+      </div>
+    </div>
+
+    <div class="panel" role="tabpanel" id="p-one" aria-labelledby="t-one">
+      <div>
+        <h3>E veniam enim velit nec felis amet</h3>
+        <ul class="does">
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg><span>Minim nisi sunt netus sed amet ex. Culpa efficitur et eiusmod ex semper <code>[[EIUSMOD: non nec labore]]</code> — e pretium scelerisque — gravida ea ultricies non.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg><span>E veniam odio exercitation et e nulla: ex nec’a et pharetra ex sint ex dolor lorem sed aliquip enim. Officia et accumsan, nec voluptate.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg><span>Curae quis et sint anim ex sed ut e posuere ea amet egestas, id nec proident minim mauris efficitur sed enim’a nisi ex.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg><span>Habitant bibendum qui e interdum aliquip morbi sunt sunt netus — vehicula, minim incididunt.</span></li>
+        </ul>
+      </div>
+      <div class="mock">
+        <div class="m-bar"><span class="t">veniam · habitant qui Laboris Donec Fugiat</span><span class="ex">Integer</span></div>
+        <div class="sheet">
+          <div class="doc">
+            <div class="doc-title">Minim Lacus</div>
+            <div class="doc-meta">Aliqua Ante Officia · Nostrud, DO</div>
+            <div class="doc-h">Vestibulum</div>
+            <div class="doc-sub"><b>Aliqua Officia, Imperdiet Suscipit</b><span>2021 – qui</span></div>
+            <ul>
+              <li><span class="chg">Sit hendrerit accumsan veniam 40,000 pariatur</span> non tristique occaecat ex gravida vestibulum curae velit.</li>
+              <li>Aliquip minim do <span class="gap-chip">[[EIUSMOD: non nec labore]]</span> egestas e posuere-anim adipiscing odio nec cillum nisi.</li>
+              <li><span class="chg">Integer veniam aliquip tristique id SIT non Cillum</span>, ullamco elit sunt nec nisi ex nec morbi.</li>
+            </ul>
+            <div class="doc-h">Mollit</div>
+            <div>SIT · Semper · Cillum · E/E nostrud · Condimentum</div>
+          </div>
+          <div class="stub-list">
+            <h4>Posuere · esse quis</h4>
+            <ol>
+              <li><i>↺</i><span>Vehicula 2 laborum semper nec aliquip’a “hendrerit ultricies”</span></li>
+              <li><i>↑</i><span>Ipsum SIT non Semper ex nec fames ea Mollit</span></li>
+              <li class="need"><i>◌</i><span>Fames sed: 1 labore</span></li>
+              <li class="none"><i>✓</i><span>Senectus: <b>eiusmod</b></span></li>
+            </ol>
+          </div>
+        </div>
+        <div class="m-foot">
+          <span>Nulla · aliquip 1 scelerisque ex tempor</span>
+          <span class="lock"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="10" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2"/></svg>Tempor SED</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" role="tabpanel" id="p-four" aria-labelledby="t-four" hidden>
+      <div>
+        <span class="chip">Excepteur &amp; Posuere</span>
+        <h3>E curae sint curae quisque, nec ac aliquip esse</h3>
+        <ul class="does">
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg><span>Sunt Velit Turpis et irure excepteur non nulla in nec enim sed labore — lacus occaecat veniam laboris sunt dolore ullamco, gravida nisi amet semper nec sit sed non.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg><span>Curae netus felis sed “qui esse %”: nec mollit nec aliquip aute qui enim sed anim, dolore sunt nec aliquip cillum, non sed amet sunt quis esse nec amet.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg><span>Culpa sed esse ex quis et e fugiat, nec e dolor. E donec nec id nec irure orci minim felis ac in 90%.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg><span>Non-elit ✓ / ✗. E nec sed eiusmod minim morbi anim suscipit cubilia e sit EST.</span></li>
+        </ul>
+      </div>
+      <div class="mock">
+        <div class="m-bar"><span class="t">velit turpis · Laboris, 7:00 AM</span><span class="ex">Integer</span></div>
+        <div class="row-sum"><span>Sint <b>40</b> ea <b>212</b> egestas occaecat</span><span><b>3</b> nostrud sunt 80% sit</span></div>
+        <div class="row-item">
+          <div><b>Aliqua Ante Officia</b><small>Laboris Donec Fugiat · Nullam (AD)</small></div>
+          <span class="row-pct top">91%</span>
+          <span class="row-yn" aria-hidden="true"><span class="y"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg></span><span><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg></span></span>
+        </div>
+        <div class="why">
+          <h5>Qui 91%</h5>
+          <div class="meter"><span class="lbl">Mollit</span><span class="bar"><i style="width:80%"></i></span><span class="val">4 ea 5 aute</span></div>
+          <div class="chips"><span class="have">SIT</span><span class="have">Semper</span><span class="have">Cillum</span><span class="have">E/E nostrud</span><span class="gap">sed — nec id sunt ullamco</span></div>
+          <div class="meter"><span class="lbl">Qui</span><span class="bar"><i style="width:100%"></i></span><span class="val">mauris</span></div>
+          <p class="score-note">Sed’id ante amet esse nisi: hendrerit non posuere accumsan qui e gravida nisi.</p>
+          <div class="filters">Deserunt, nec labore: <span>Nec Quis</span><span>Nullam (AD)</span></div>
+        </div>
+        <div class="row-item">
+          <div><b>Ultricies Amet</b><small>Nulla Hendrerit · Nec Consequat</small></div>
+          <span class="row-pct">86%</span>
+          <span class="row-yn" aria-hidden="true"><span class="y"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg></span><span><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg></span></span>
+        </div>
+        <div class="row-item">
+          <div><b>Aliqua Gravida Officia</b><small>Proident Accumsan · Nullam (AD)</small></div>
+          <span class="row-pct">82%</span>
+          <span class="row-yn" aria-hidden="true"><span class="y"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg></span><span><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg></span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" role="tabpanel" id="p-two" aria-labelledby="t-two" hidden>
+      <div>
+        <h3>E ullamco enim anim amet sed pharetra ut</h3>
+        <ul class="does">
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg><span>Lacus egestas sunt ullamco aliquip do aliquip: e dolor, e curae aliquip, non occaecat pharetra qui nec bibendum, nulla, vestibulum, mollit non eros.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg><span>Fugiat ultrices non morbi enim morbi elit sed, sunt nec orci sed’id cubilia, odio sunt sed vestibulum ut nec cillum.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg><span>Eiusmod et veniam eiusmod sed. Ex ipsum nisi nec ullamco ex orci id fames ea sed — minim sunt senectus.</span></li>
+        </ul>
+      </div>
+      <div class="mock">
+        <div class="m-bar"><span class="t">proident · ullamco dolore</span><span class="ex">Integer</span></div>
+        <div class="card-b">
+          <div class="score-grid">
+            <div class="cur"><small>Bibendum</small><b>48</b></div>
+            <div><small>Nulla</small><b>61</b></div>
+            <div><small>Vestibulum</small><b>72</b></div>
+            <div><small>Mollit</small><b>80</b></div>
+          </div>
+          <div class="rw-pair">
+            <div class="row"><small>Qui</small><span class="before">Ante Officia | SIT | Velit | Adipiscing nulla ante</span></div>
+            <div class="row"><small>Eiusmod</small><span class="after">Aliqua Ante Officia — hendrerit non posuere accumsan enim gravida dolor nec do · SIT, Semper, Cillum</span></div>
+          </div>
+          <div class="rw-note">
+            <small>Ullamco nulla · do e orci nulla minim</small>
+            Ac nec nec sunt lacus odio turpis culpa: nec minim nullam ac id velit 13, nec velit 2. Consequat do eiusmod nisi gravida ea varius nisi et amet sunt ex pretium.
+            <div class="act"><span>Orci nulla</span><span>Sed orci ex</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" role="tabpanel" id="p-three" aria-labelledby="t-three" hidden>
+      <div>
+        <h3>Nisi vehicula sunt veniam ante netus</h3>
+        <ul class="does">
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg><span>Dolor consectetur netus do ullamco labore ipsum non tristique deserunt gravida sunt nec veniam sed cubilia amet Lorem.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg><span>Pariatur ex nec’a dolor ex sunt sed ullamco et amet qui sed. Sed dolore, sed luctus. Ex minim cubilia ac consectetur do sed sed.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg><span>Sunt e nec sunt est aliquip id non minim. Exercitation, morbi duis non suscipit odio id non egestas, id “est E cubilia dolor sint?” est ac mollit.</span></li>
+        </ul>
+      </div>
+      <div class="mock">
+        <div class="m-bar"><span class="t">consectetur · officia.nulla.integer</span><span class="ex">Integer</span></div>
+        <div class="form">
+          <div class="fld"><label>Irure ante</label><div class="in"><span class="nm">Minim</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg></div></div>
+          <div class="fld"><label>Sint ante</label><div class="in"><span class="nm">Lacus</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg></div></div>
+          <div class="fld"><label>Cubilia felis</label><div class="in"><span class="nm">Aliqua Officia</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg></div></div>
+          <div class="fld"><label>Donec ea vestibulum</label><div class="in"><span class="nm">7</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg></div></div>
+          <div class="fld full"><label>Veniam</label><div class="in"><span class="nm">minim-lacus-nulla.sed · habitant</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg></div></div>
+          <div class="fld full left"><label>Qui ut sed esse ex quis in Nulla?</label><div class="in">Amet qui sed — eiusmod id sunt ullamco aliquip esse.</div></div>
+        </div>
+        <div class="m-foot"><span>19 ea 21 varius dolore sunt sunt ullamco · 2 amet qui sed</span><span class="submit">Luctus</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="why">
+  <div class="wrap">
+    <div class="why-head">
+      <div>
+        <h2 class="display h2">Qui Ac Irure <span class="accent">Esse</span></h2>
+        <p class="sub">Veniam varius turpis e labore minim. Sint’a amet minim curae elit.</p>
+      </div>
+      <p class="src">Sunt luctus morbi sunt Turpis non Donec. Irure occaecat.</p>
+    </div>
+
+    <div class="wall">
+      <div class="col">
+        <figure class="q"><blockquote>Semper ac do nec nostrud exercitation odio nisi nec voluptate.</blockquote><figcaption>Turpis · adipiscingelit · Qui 2026</figcaption></figure>
+        <figure class="q"><blockquote>Amet ea nec duis veniam sed nec sunt. Anim hendrerit sed nisi habitant cupidatat fugiat esse voluptate habitant fames.</blockquote><figcaption>Donec · Sit 2025</figcaption></figure>
+        <figure class="q"><blockquote>Do sed nisi’a dolor non e bibendum curae et ac tristique e lorem ipsum ante fugiat in ex</blockquote><figcaption>Donec · Sit 2023</figcaption></figure>
+        <figure class="q"><blockquote>E’id donec enim EST non adipiscing quis sunt mauris ante 6 veniam, id E’a officia nulla amet quisque ex curae.</blockquote><figcaption>Turpis · nostrud · Nec 2025</figcaption></figure>
+        <figure class="q"><blockquote>Commodo minim id do labore consectetur non esse ex anim sunt mauris do amet esse ut ex quis $200k+ id ipsum labore.</blockquote><figcaption>Turpis · adipiscingelit · Nec 2025</figcaption></figure>
+        <figure class="q"><blockquote>anim ex pharetra aliqua ex nullam do sed’id morbi id nec sunt felis 13 donec ante sunt labore?</blockquote><figcaption>Turpis · Ullamcointerdum · Nec 2026</figcaption></figure>
+        <figure class="q" aria-hidden="true"><blockquote>Semper ac do nec nostrud exercitation odio nisi nec voluptate.</blockquote><figcaption>Turpis · adipiscingelit · Qui 2026</figcaption></figure>
+        <figure class="q" aria-hidden="true"><blockquote>Amet ea nec duis veniam sed nec sunt. Anim hendrerit sed nisi habitant cupidatat fugiat esse voluptate habitant fames.</blockquote><figcaption>Donec · Sit 2025</figcaption></figure>
+        <figure class="q" aria-hidden="true"><blockquote>Do sed nisi’a dolor non e bibendum curae et ac tristique e lorem ipsum ante fugiat in ex</blockquote><figcaption>Donec · Sit 2023</figcaption></figure>
+        <figure class="q" aria-hidden="true"><blockquote>E’id donec enim EST non adipiscing quis sunt mauris ante 6 veniam, id E’a officia nulla amet quisque ex curae.</blockquote><figcaption>Turpis · nostrud · Nec 2025</figcaption></figure>
+        <figure class="q" aria-hidden="true"><blockquote>Commodo minim id do labore consectetur non esse ex anim sunt mauris do amet esse ut ex quis $200k+ id ipsum labore.</blockquote><figcaption>Turpis · adipiscingelit · Nec 2025</figcaption></figure>
+        <figure class="q" aria-hidden="true"><blockquote>anim ex pharetra aliqua ex nullam do sed’id morbi id nec sunt felis 13 donec ante sunt labore?</blockquote><figcaption>Turpis · Ullamcointerdum · Nec 2026</figcaption></figure>
+      </div>
+      <div class="col">
+        <figure class="q"><blockquote>E ipsum do EX, curae nulla aliquip, nec “Esse Dolor”… non nisi eiusmod. Nec ante e hendrerit.</blockquote><figcaption>Turpis · adipiscingelit · Nec 2026</figcaption></figure>
+        <figure class="q"><blockquote>Minim elit E odio mauris est… E velit consequat sit quisque do mollit et fugiat in sed nec aliqua do e dolore? Do E sed ac et do mollit cillum ultrices id nec donec?</blockquote><figcaption>Turpis · adipiscingelit · Nec 2026</figcaption></figure>
+        <figure class="q"><blockquote>Ex semper sed ex aliqua adipiscing cubilia do sunt mollit elit odio ante enim. Hendrerit sit deserunt qui esse cubilia, non vestibulum sed nec amet minim posuere morbi pariatur odio ex.</blockquote><figcaption>Turpis · adipiscingelit · Sit 2025</figcaption></figure>
+        <figure class="q"><blockquote>curae elit E amet ex E amet amet… varius. Nec labore occaecat sunt-efficitur, nec nullam “reprehenderit” morbi, nec consectetur — ex sed minim sint ex ut. In nec sunt elit, E sunt E anim ex dolor ipsum ex.</blockquote><figcaption>Turpis · proident · Non 2025</figcaption></figure>
+        <figure class="q"><blockquote>E’a 27, tincidunt vestibulum, non pariatur commodo elit E’id dolore luctus id aute. Laboris sed mollit laboris odio officia, reprehenderit, culpa... non E’a minim vestibulum nec laborum, egestas odio incididunt, ex amet nec officia amet ex ut ante.</blockquote><figcaption>Turpis · adipiscingelit · Non 2025</figcaption></figure>
+        <figure class="q"><blockquote>Id mollit e nullam veniam ex ut non nisi e veniam… Id luctus est elit qui ut. Minim eros ac… Qui id’a amet. Non E’a incididunt.</blockquote><figcaption>Turpis · adipiscingelit · Nec 2026</figcaption></figure>
+        <figure class="q" aria-hidden="true"><blockquote>E ipsum do EX, curae nulla aliquip, nec “Esse Dolor”… non nisi eiusmod. Nec ante e hendrerit.</blockquote><figcaption>Turpis · adipiscingelit · Nec 2026</figcaption></figure>
+        <figure class="q" aria-hidden="true"><blockquote>Minim elit E odio mauris est… E velit consequat sit quisque do mollit et fugiat in sed nec aliqua do e dolore? Do E sed ac et do mollit cillum ultrices id nec donec?</blockquote><figcaption>Turpis · adipiscingelit · Nec 2026</figcaption></figure>
+        <figure class="q" aria-hidden="true"><blockquote>Ex semper sed ex aliqua adipiscing cubilia do sunt mollit elit odio ante enim. Hendrerit sit deserunt qui esse cubilia, non vestibulum sed nec amet minim posuere morbi pariatur odio ex.</blockquote><figcaption>Turpis · adipiscingelit · Sit 2025</figcaption></figure>
+        <figure class="q" aria-hidden="true"><blockquote>curae elit E amet ex E amet amet… varius. Nec labore occaecat sunt-efficitur, nec nullam “reprehenderit” morbi, nec consectetur — ex sed minim sint ex ut. In nec sunt elit, E sunt E anim ex dolor ipsum ex.</blockquote><figcaption>Turpis · proident · Non 2025</figcaption></figure>
+        <figure class="q" aria-hidden="true"><blockquote>E’a 27, tincidunt vestibulum, non pariatur commodo elit E’id dolore luctus id aute. Laboris sed mollit laboris odio officia, reprehenderit, culpa... non E’a minim vestibulum nec laborum, egestas odio incididunt, ex amet nec officia amet ex ut ante.</blockquote><figcaption>Turpis · adipiscingelit · Non 2025</figcaption></figure>
+        <figure class="q" aria-hidden="true"><blockquote>Id mollit e nullam veniam ex ut non nisi e veniam… Id luctus est elit qui ut. Minim eros ac… Qui id’a amet. Non E’a incididunt.</blockquote><figcaption>Turpis · adipiscingelit · Nec 2026</figcaption></figure>
+      </div>
+      <div class="col">
+        <figure class="q"><blockquote>Felis 2k+ exercitation, sed E anim felis sed felis, senectus ut felis adipiscing, senectus adipiscing, eros felis, non E ac VELIT EA ESSE. Esse sed nec cubilia do mollit.</blockquote><figcaption>Turpis · adipiscingelit · Sit 2025</figcaption></figure>
+        <figure class="q"><blockquote>E sed ante sit id Nostrud. Suscipit do EX. E’id venenatis nulla 50 exercitation minim. Veniam E’id aute pretium. Mollit e luctus incididunt non tempor non efficitur. Non.</blockquote><figcaption>Turpis · duis · Nec 2026</figcaption></figure>
+        <figure class="q"><blockquote>E ut nulla 15 e est, odio exercitation nulla aliquip non excepteur do mollit qui eros.</blockquote><figcaption>Turpis · adipiscingelit · Non 2025</figcaption></figure>
+        <figure class="q"><blockquote>Do Proident ullamco et tempor integer nec do adipiscing curae do vulputate’a ullamco incididunt nec integer nec, sed ac anim commodo vestibulum… Amet anim E ante irure non sed nec E ultrices do vestibulum ex maecenas non adipiscing?</blockquote><figcaption>Turpis · proident · Non 2025</figcaption></figure>
+        <figure class="q"><blockquote>E esse in nec deserunt non amet incididunt sint non adipiscingelit qui adipiscing enim sit’a officia ante-maecenas magna amet.</blockquote><figcaption>Turpis · malesuada · Sit 2025</figcaption></figure>
+        <figure class="q" aria-hidden="true"><blockquote>Felis 2k+ exercitation, sed E anim felis sed felis, senectus ut felis adipiscing, senectus adipiscing, eros felis, non E ac VELIT EA ESSE. Esse sed nec cubilia do mollit.</blockquote><figcaption>Turpis · adipiscingelit · Sit 2025</figcaption></figure>
+        <figure class="q" aria-hidden="true"><blockquote>E sed ante sit id Nostrud. Suscipit do EX. E’id venenatis nulla 50 exercitation minim. Veniam E’id aute pretium. Mollit e luctus incididunt non tempor non efficitur. Non.</blockquote><figcaption>Turpis · duis · Nec 2026</figcaption></figure>
+        <figure class="q" aria-hidden="true"><blockquote>E ut nulla 15 e est, odio exercitation nulla aliquip non excepteur do mollit qui eros.</blockquote><figcaption>Turpis · adipiscingelit · Non 2025</figcaption></figure>
+        <figure class="q" aria-hidden="true"><blockquote>Do Proident ullamco et tempor integer nec do adipiscing curae do vulputate’a ullamco incididunt nec integer nec, sed ac anim commodo vestibulum… Amet anim E ante irure non sed nec E ultrices do vestibulum ex maecenas non adipiscing?</blockquote><figcaption>Turpis · proident · Non 2025</figcaption></figure>
+        <figure class="q" aria-hidden="true"><blockquote>E esse in nec deserunt non amet incididunt sint non adipiscingelit qui adipiscing enim sit’a officia ante-maecenas magna amet.</blockquote><figcaption>Turpis · malesuada · Sit 2025</figcaption></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec alt" id="compare">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kicker">Amet enim esse ipsum</p>
+      <h2 class="display h2"><span class="accent">Lorem</span> et sunt labore egestas</h2>
+      <p class="sub">Amet reprehenderit enim eiusmod, integer non nulla senectus. In Lorem sed nec non egestas qui anim sed culpa — ex minim tristique lacus.</p>
+    </div>
+    <div class="cmp-scroll">
+      <table class="cmp">
+        <thead><tr><th scope="col"><span class="sr-only">Egestas</span></th><th scope="col">Est eiusmod</th><th scope="col">Labore integer</th><th scope="col">Nulla senectus</th><th scope="col" class="d">Lorem</th></tr></thead>
+        <tbody>
+          <tr class="cost"><th scope="row">Minim</th><td>$200–$500 sed veniam</td><td>$100–$300/ex</td><td>$1,000–$5,000/ex</td><td class="d">Esse — ex $19+</td></tr>
+          <tr><th scope="row">Veniam egestas</th><td><span class="ic y"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>1–3 hendrerit</span></td><td>Eiusmod pharetra</td><td><span class="ic y"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Ultrices</span></td><td class="d"><span class="ic y"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Curae nulla &amp; accumsan</span></td></tr>
+          <tr><th scope="row">Nulla aliquip</th><td>Velit $50–$150</td><td>NEC odio sint</td><td><span class="ic y"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Ultrices</span></td><td class="d"><span class="ic y"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Curae nulla &amp; accumsan</span></td></tr>
+          <tr><th scope="row">Proident consectetuer</th><td>Velit enim</td><td>Venenatis</td><td><span class="ic y"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Ultrices</span></td><td class="d"><span class="ic y"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Ultrices</span></td></tr>
+          <tr><th scope="row">Ultrices ultrices</th><td><span class="ic n"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg><span class="sr-only">Nec ultrices</span></span></td><td>Odio pharetra</td><td><span class="ic y"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Anim egestas</span></td><td class="d"><span class="ic y"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Ultrices</span></td></tr>
+          <tr><th scope="row">Nec semper incididunt</th><td><span class="ic n"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg><span class="sr-only">Nec ultrices</span></span></td><td><span class="ic n"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg><span class="sr-only">Nec ultrices</span></span></td><td><span class="ic n"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg><span class="sr-only">Nec ultrices</span></span></td><td class="d"><span class="ic y"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Qui-ex-qui</span></td></tr>
+          <tr><th scope="row">Vestibulum</th><td>3–7 nisi</td><td>Do ullamcorper</td><td>2–4 minim</td><td class="d">Quisque</td></tr>
+          <tr><th scope="row">24/7 exercitation</th><td><span class="ic n"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg><span class="sr-only">Nec ultrices</span></span></td><td><span class="ic n"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg><span class="sr-only">Nec ultrices</span></span></td><td><span class="ic n"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg><span class="sr-only">Nec ultrices</span></span></td><td class="d"><span class="ic y"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Luctus do</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="cmp-foot">
+      <p>Non egestas, nec quis ea sed culpa — in e pharetra ea nec enim.</p>
+      <a class="btn btn-ghost" href="#pricing">Eros Posuere →</a>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="pricing">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kicker">Posuere</p>
+      <h2 class="display h2">Dolor esse. Egestas nisi do sed esse eros.</h2>
+      <p class="sub">Sunt egestas odio do EX veniam. Nec esse esse aliqua curae velit; nec anim amet sed sed enim non magna in sunt odio. Ac pellentesque, eiusmod ex tempor.</p>
+    </div>
+    <div class="plans">
+      <div class="plan">
+        <div class="plan-top"><span class="plan-name">Habitant</span><span class="badge free">Esse ullamco</span></div>
+        <div class="plan-price"><b>Esse</b><span>minim nostrud</span></div>
+        <p class="desc">Curae sunt — sit ex qui sunt</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Sed magna, mollit non vestibulum</li>
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>10k veniam/velit, 1k e est</li>
+          <li class="x"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg>Ac Velit Turpis</li>
+        </ul>
+        <p class="note">Ac eros, ac eiusmod, eiusmod ex tempor.</p>
+        <a class="btn btn-primary" href="#">Nec Gravida Esse</a>
+      </div>
+      <div class="plan hl">
+        <div class="plan-top"><span class="plan-name">Excepteur</span><span class="badge">Dolor sint</span></div>
+        <div class="plan-price"><b>$19</b><span>non elit · 30 nisi ex magna ex</span></div>
+        <p class="desc">50k veniam, e velit in e elit</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Adipiscing id Habitant</li>
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>50k veniam, 30 nisi</li>
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Sunt Velit Turpis, irure excepteur</li>
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Ac velit netus — magna in sunt odio</li>
+        </ul>
+        <p class="note">Sit enim. Ac pellentesque, eiusmod ex tempor.</p>
+        <a class="btn btn-ghost" href="#">Nec Excepteur</a>
+      </div>
+      <div class="plan">
+        <div class="plan-top"><span class="plan-name">Posuere</span><span class="badge">Orci sint</span></div>
+        <div class="plan-price"><b>$49</b><span>non elit · lorem sint ex 12 veniam</span></div>
+        <p class="desc">Sed enim, magna in sunt sed odio</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Adipiscing id Excepteur</li>
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>1k veniam, 12 veniam</li>
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Ac velit netus ex lacus</li>
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Sed eros amet sed non’a non</li>
+        </ul>
+        <p class="note">Sit enim. Ac pellentesque, eiusmod ex tempor.</p>
+        <a class="btn btn-ghost" href="#">Nec Posuere</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec alt" id="partners">
+  <div class="wrap partner">
+    <div>
+      <p class="kicker">Qui integer, eiusmod non nulla senectus</p>
+      <h2 class="display">Sed sed e labore donec, mollit semper, ex nulla egestas?</h2>
+      <p>Quis odio ad ex sed labore aliquip turpis netus ea curae pellentesque — non velit eros nostrud ante sunt accumsan magna. Lorem et nec luctus curae sunt pharetra, nec e condimentum qui ex.</p>
+    </div>
+    <div class="partner-side">
+      <a class="btn btn-ink btn-xl" href="#">Commodo odio ad
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="sec close">
+  <div class="wrap close-in">
+    <div>
+      <h2 class="display">Sunt labore egestas et nulla.<span class="cursor" aria-hidden="true"></span></h2>
+      <p>Dolor esse odio 5 gravida EX veniam curae velit — non sunt eros ante 10,000 incididunt reprehenderit.</p>
+      <p class="micro">Ac veniam eros · Nec esse 5 gravida aliqua curae velit · Egestas nisi do sed esse eros</p>
+    </div>
+    <a class="btn btn-primary btn-xl" href="#">Nec Gravida Esse
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg>
+    </a>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="#top" aria-label="Lorem, anim ex nec">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2" y="3" width="20" height="18" rx="2" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/></svg>
+      Lorem
+    </a>
+    <nav aria-label="Labore">
+      <a href="#">Nulla</a>
+      <a href="#">Posuere</a>
+      <a href="#">Esse</a>
+      <a href="#">Gravida</a>
+      <a href="#">Lacus</a>
+    </nav>
+    <span>© 2026 Lorem, Tempor NON</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hero = document.querySelector('.hero');
+  var cv = document.getElementById('field');
+  var ctx = cv.getContext('2d');
+  var W = 0,
+    H = 0,
+    cells = [],
+    sweep = -200,
+    last = null,
+    raf = 0,
+    visible = true;
+  var mouse = {
+    x: -9999,
+    y: -9999
+  };
+  var CW = 22,
+    CH = 13;
+  function build() {
+    var r = hero.getBoundingClientRect();
+    W = r.width;
+    H = r.height;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    cv.width = Math.round(W * dpr);
+    cv.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cells = [];
+    var cols = Math.ceil(W / CW) + 1,
+      rows = Math.ceil(H / CH);
+    for (var j = 0; j < rows; j++) {
+      for (var i = 0; i < cols; i++) {
+        if (Math.random() < 0.2) continue;
+        cells.push({
+          x: i * CW + (j % 2 ? CW / 2 : 0),
+          y: j * CH + 6,
+          w: 5 + Math.random() * 12,
+          lit: 0,
+          hit: 0
+        });
+      }
+    }
+    if (reduce) {
+      var n = Math.round(cells.length * 0.006);
+      for (var k = 0; k < n; k++) cells[Math.random() * cells.length | 0].hit = 1;
+    }
+    draw();
+  }
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    if (!reduce) {
+      var g = ctx.createLinearGradient(sweep - 160, 0, sweep, 0);
+      g.addColorStop(0, 'rgba(96,165,250,0)');
+      g.addColorStop(1, 'rgba(96,165,250,0.07)');
+      ctx.fillStyle = g;
+      ctx.fillRect(sweep - 160, 0, 160, H);
+      ctx.fillStyle = 'rgba(96,165,250,0.32)';
+      ctx.fillRect(sweep, 0, 1, H);
+    }
+    for (var i = 0; i < cells.length; i++) {
+      var c = cells[i];
+      if (c.hit > 0.02) {
+        ctx.fillStyle = 'rgba(96,165,250,' + (0.16 * c.hit).toFixed(3) + ')';
+        ctx.fillRect(c.x - 4, c.y - 4, c.w + 8, 10);
+        ctx.fillStyle = 'rgba(147,197,253,' + (0.35 + 0.65 * c.hit).toFixed(3) + ')';
+        ctx.fillRect(c.x, c.y, c.w, 2);
+        continue;
+      }
+      var a = 0.17 + c.lit * 0.45;
+      var dx = c.x - mouse.x,
+        dy = c.y - mouse.y,
+        d2 = dx * dx + dy * dy;
+      if (d2 < 16900) a += (1 - Math.sqrt(d2) / 130) * 0.3;
+      ctx.fillStyle = 'rgba(142,152,171,' + Math.min(a, 0.8).toFixed(3) + ')';
+      ctx.fillRect(c.x, c.y, c.w, 2);
+    }
+  }
+  function step(now) {
+    var dt = last === null ? 1 : Math.min((now - last) / 16.667, 3);
+    last = now;
+    var prev = sweep;
+    sweep += 3.4 * dt;
+    if (sweep > W + 220) {
+      sweep = -220;
+      prev = sweep;
+    }
+    var lit = 0;
+    for (var i = 0; i < cells.length; i++) {
+      var c = cells[i];
+      if (c.x <= sweep && c.x > prev) {
+        c.lit = 1;
+        if (Math.random() < 0.011) c.hit = 1;
+      }
+      if (c.lit > 0) c.lit = Math.max(0, c.lit - 0.018 * dt);
+      if (c.hit > 0) {
+        c.hit = Math.max(0, c.hit - 0.0011 * dt);
+        lit++;
+      }
+    }
+  }
+  function loop(now) {
+    step(now);
+    draw();
+    raf = requestAnimationFrame(loop);
+  }
+  function start() {
+    if (!raf && !reduce && visible) {
+      last = null;
+      raf = requestAnimationFrame(loop);
+    }
+  }
+  function stop() {
+    if (raf) {
+      cancelAnimationFrame(raf);
+      raf = 0;
+    }
+  }
+  build();
+  var rt;
+  if ('ResizeObserver' in window) {
+    new ResizeObserver(function () {
+      clearTimeout(rt);
+      rt = setTimeout(build, 120);
+    }).observe(hero);
+  } else {
+    window.addEventListener('resize', function () {
+      clearTimeout(rt);
+      rt = setTimeout(build, 120);
+    });
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) {
+      visible = es[0].isIntersecting;
+      visible ? start() : stop();
+    }).observe(hero);
+  }
+  hero.addEventListener('pointermove', function (e) {
+    var r = hero.getBoundingClientRect();
+    mouse.x = e.clientX - r.left;
+    mouse.y = e.clientY - r.top;
+    if (reduce) draw();
+  });
+  hero.addEventListener('pointerleave', function () {
+    mouse.x = mouse.y = -9999;
+    if (reduce) draw();
+  });
+  start();
+  var steps = Array.prototype.slice.call(document.querySelectorAll('.console [data-step]'));
+  var timers = [];
+  function play() {
+    timers.forEach(clearTimeout);
+    timers = [];
+    if (reduce) return;
+    steps.forEach(function (s) {
+      s.classList.add('q');
+      s.classList.remove('run');
+    });
+    steps.forEach(function (s, i) {
+      timers.push(setTimeout(function () {
+        s.classList.remove('q');
+        if (s.classList.contains('step')) {
+          s.classList.add('run');
+          timers.push(setTimeout(function () {
+            s.classList.remove('run');
+          }, 650));
+        }
+      }, 450 + i * 780));
+    });
+  }
+  document.getElementById('replay').addEventListener('click', play);
+  play();
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+  function select(t, focus) {
+    tabs.forEach(function (x) {
+      var on = x === t;
+      x.setAttribute('aria-selected', on ? 'true' : 'false');
+      x.tabIndex = on ? 0 : -1;
+      document.getElementById(x.getAttribute('aria-controls')).hidden = !on;
+    });
+    if (focus) t.focus();
+  }
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function () {
+      select(t, false);
+    });
+    t.addEventListener('keydown', function (e) {
+      var n = null;
+      if (e.key === 'ArrowRight') n = tabs[(i + 1) % tabs.length];
+      if (e.key === 'ArrowLeft') n = tabs[(i - 1 + tabs.length) % tabs.length];
+      if (e.key === 'Home') n = tabs[0];
+      if (e.key === 'End') n = tabs[tabs.length - 1];
+      if (n) {
+        e.preventDefault();
+        select(n, true);
+      }
+    });
+  });
+})();
+</script>

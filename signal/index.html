@@ -1,0 +1,2094 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Signal — landing page template</title>
+<meta name="description" content="Signal: a free scroll-driven landing page template with a WebGL particle field. Placeholder copy throughout.">
+<script>
+(function () {
+  try {
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('fx');
+    }
+  } catch (e) {}
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<style>
+:root{
+  color-scheme: light;
+  --night:#060A14; --night-2:#0A1120; --night-3:#101A2D; --night-line:#1B2539;
+  --night-text:#E7EBF3; --night-muted:#8E98AB; --night-dim:#5E6A80;
+  --paper:#FFFFFF; --paper-2:#F4F6FA; --ink:#0B1220; --ink-2:#2E3747;
+  --muted:#5F6879; --line:#E1E5EC; --line-2:#CBD2DD;
+  --blue:#2563EB; --blue-press:#1D4ED8; --blue-hi:#60A5FA; --blue-soft:#93C5FD; --blue-wash:#EEF3FE;
+  --green:#15803D; --green-hi:#4ADE80;
+  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --gutter:clamp(16px,4vw,48px);
+  --max:1200px;
+  --hud:60px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:auto}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:clip}
+[hidden]{display:none!important}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.wrap{max-width:var(--max);margin-inline:auto;padding-inline:var(--gutter)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.nowrap{white-space:nowrap}
+.display{--wd:82;font-family:var(--f-display);font-stretch:calc(var(--wd) * 1%);font-weight:780;letter-spacing:-0.022em;line-height:.98;text-wrap:balance;margin:0}
+.h2{font-size:clamp(2.1rem,1.2rem + 3vw,3.6rem)}
+.accent{color:var(--blue)}
+.kicker{font-family:var(--f-mono);font-size:12.5px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 18px;display:flex;align-items:center;gap:10px}
+.kicker::before{content:"";width:22px;height:2px;background:var(--blue)}
+.sub{font-size:clamp(1.05rem,1rem + .3vw,1.25rem);color:var(--muted);max-width:60ch;margin:18px 0 0;text-wrap:pretty}
+.cursor{display:inline-block;width:.46em;height:.09em;background:currentColor;margin-left:.06em;animation:blink 1.15s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 22px;font-family:var(--f-body);font-weight:600;font-size:16px;text-decoration:none;border:1px solid transparent;border-radius:0;cursor:pointer;transition:background-color .2s,color .2s,border-color .2s}
+.btn svg{width:18px;height:18px;transition:transform .25s}
+.btn:hover svg{transform:translateX(3px)}
+.btn-primary{background:#fff;color:var(--ink);border-color:#fff}
+.btn-primary:hover{background:var(--blue-wash);border-color:var(--blue-wash)}
+.plans .btn-primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+.plans .btn-primary:hover{background:#1F2937;border-color:#1F2937}
+.btn-xl{min-height:60px;padding:0 34px;font-size:18px}
+.btn-sm{min-height:40px;padding:0 16px;font-size:14.5px}
+.btn-ghost{background:#fff;color:var(--ink);border-color:#D1D5DB}
+.btn-ghost:hover{background:#F3F4F6}
+.btn-ink{background:var(--ink);color:#fff}
+.btn-ink:hover{background:#1c2638}
+.hud{position:fixed;top:0;left:0;right:0;z-index:60;height:calc(var(--hud) + env(safe-area-inset-top,0px));padding-top:env(safe-area-inset-top,0px);padding-inline:var(--gutter);display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(6,10,20,.9);-webkit-backdrop-filter:blur(12px) saturate(140%);backdrop-filter:blur(12px) saturate(140%);border-bottom:1px solid rgba(27,37,57,.9);color:var(--night-text)}
+.hud-l{display:flex;align-items:center;gap:18px;min-width:0}
+.brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;font-size:18px;letter-spacing:-.01em;color:#fff;min-height:44px}
+.brand svg{width:24px;height:24px;flex:none}
+.clock{display:inline-flex;align-items:center;gap:9px;font-family:var(--f-mono);font-size:13px;color:#fff;padding:6px 10px;border:1px solid var(--night-line);background:rgba(10,17,32,.6)}
+.clock .dot{width:7px;height:7px;border-radius:50%;background:var(--green-hi);animation:pulse 2.4s ease-out infinite}
+.clock time{font-variant-numeric:tabular-nums;letter-spacing:.04em}
+.clock .duty{color:var(--night-muted);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(74,222,128,.55)}70%{box-shadow:0 0 0 8px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
+.hud-r{display:flex;align-items:center;gap:8px}
+.hud-r .signin{color:var(--night-muted);text-decoration:none;font-size:15px;padding:10px 12px;min-height:44px;display:inline-flex;align-items:center}
+.hud-r .signin:hover{color:#fff}
+.hud-cta{transition:opacity .3s,visibility .3s}
+.fx .hud:not(.past) .hud-cta{opacity:0;visibility:hidden}
+.hud-progress{position:absolute;left:0;right:0;bottom:-1px;height:1px;background:#fff;transform-origin:0 50%;transform:scaleX(0)}
+@media (max-width:640px){
+  .clock .duty{display:none}
+  .hud .brand span{display:none}
+  .hud .brand{min-width:44px;justify-content:center}
+  .pf-h .ex,.m-bar .ex,.badge,.score-grid small,.pl em{font-size:11px}
+  .fx .hud.past .signin{display:none}
+  .fx .hud:not(.past) .hud-cta{display:none}
+}
+.stage{--bg:rgb(6,10,20);--fg:rgb(231,235,243);--fl:rgb(27,37,57);position:relative;background:var(--bg);color:var(--fg);isolation:isolate}
+.stage canvas{position:absolute;left:0;top:0;width:100%;height:min(100%,100vh);z-index:0;display:block;pointer-events:none}
+.fx .stage canvas{height:100%}
+.vig{position:absolute;inset:0;z-index:1;pointer-events:none;background:
+  radial-gradient(ellipse 58% 70% at 20% 55%, rgba(6,10,20,.92) 0%, rgba(6,10,20,.6) 45%, rgba(6,10,20,0) 80%),
+  linear-gradient(180deg, rgba(6,10,20,.5) 0%, rgba(6,10,20,0) 25%, rgba(6,10,20,0) 70%, rgba(6,10,20,.85) 100%)}
+.hero-layer{position:relative;z-index:2;padding-block:calc(var(--hud) + 56px) 72px}
+.status{display:inline-flex;align-items:center;gap:10px;font-family:var(--f-mono);font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--night-muted);margin:0 0 26px;padding:7px 12px;border:1px solid var(--night-line);background:rgba(10,17,32,.6)}
+.status .dot{width:7px;height:7px;border-radius:50%;background:var(--green-hi);animation:pulse 2.4s ease-out infinite}
+.hero-title{font-size:clamp(2.3rem,.8rem + 4.8vw,5.2rem);color:#fff}
+.hero-title .w{display:inline-block}
+.hero-title .accent{color:var(--blue-hi)}
+.hero-title .cursor{color:#fff}
+.hero-sub{font-size:clamp(1.15rem,1rem + .6vw,1.5rem);line-height:1.45;color:#C9D0DC;margin:26px 0 0;max-width:30ch;text-wrap:balance}
+.hero-cta{display:flex;flex-wrap:wrap;align-items:center;gap:14px 24px;margin-top:36px}
+.hero-cta .try{color:var(--night-muted);font-size:15px;text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--night-line);min-height:44px;display:inline-flex;align-items:center}
+.hero-cta .try:hover{color:#fff;text-decoration-color:var(--night-muted)}
+.offer{margin:20px 0 0;font-size:15px;color:var(--night-muted);display:flex;flex-wrap:wrap;gap:6px 16px}
+.offer span{display:inline-flex;align-items:center}
+.offer span+span::before{content:"";width:4px;height:4px;background:var(--night-dim);margin-right:12px}
+@media (max-width:560px){.offer{flex-direction:column;gap:2px}.offer span+span::before{display:none}}
+.trust{margin:26px 0 0;padding-top:20px;border-top:1px solid var(--night-line);max-width:440px;font-size:15px;color:var(--night-muted)}
+.trust b{color:#fff;font-weight:600;font-variant-numeric:tabular-nums}
+.hint{display:none;align-items:center;gap:12px;margin-top:34px;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--night-dim)}
+.hint i{position:relative;width:1px;height:34px;background:var(--night-line);overflow:hidden}
+.hint i::after{content:"";position:absolute;left:0;top:-40%;width:1px;height:40%;background:var(--blue-hi);animation:drip 1.8s ease-in-out infinite}
+@keyframes drip{to{top:100%}}
+.horizon{display:none}
+.frame{position:relative;z-index:2;margin-inline:var(--gutter);border:1px solid var(--fl);margin-bottom:64px}
+.f-bar{display:flex;align-items:center;gap:10px;padding:0 14px;height:46px;border-bottom:1px solid var(--fl);font-family:var(--f-mono);font-size:12px}
+.f-bar svg{width:16px;height:16px}
+.f-bar .name{font-weight:600;white-space:nowrap}
+.f-bar .tag{margin-left:auto;padding:3px 8px;border:1px solid var(--fl);letter-spacing:.06em;text-transform:uppercase;font-size:10.5px;opacity:.75;white-space:nowrap}
+.f-view{position:relative}
+.track{display:grid}
+.f-time{display:none}
+.pnl{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(24px,4vw,64px);align-items:center;padding:40px clamp(16px,3vw,40px);border-top:1px solid var(--fl);color:var(--fg)}
+.pnl:first-child{border-top:0}
+.p-time{display:block;font-family:var(--f-display);font-stretch:78%;font-weight:300;font-size:clamp(2.6rem,1.6rem + 3.4vw,5.4rem);line-height:.9;letter-spacing:-.03em;opacity:.38;font-variant-numeric:tabular-nums;margin-bottom:14px}
+.p-title{font-family:var(--f-display);font-stretch:85%;font-weight:740;font-size:clamp(1.5rem,1.05rem + 1.7vw,2.7rem);line-height:1.04;letter-spacing:-.018em;margin:0;text-wrap:balance}
+.p-det{margin:14px 0 0;font-family:var(--f-mono);font-size:13px;line-height:1.6;opacity:.72}
+.p0{grid-template-columns:minmax(0,1fr)}
+.p0 .p-lab{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-hi);margin:0 0 18px}
+.ask{margin:0;font-size:clamp(1.6rem,1rem + 2.6vw,3.3rem);line-height:1.18;font-weight:500;letter-spacing:-.01em;border-left:3px solid var(--blue-hi);padding-left:.55em;max-width:21ch;color:#fff}
+.ask .cursor{color:#fff}
+.p0 .p-det{margin-top:26px}
+.gap-chip{display:inline-block;font-family:var(--f-mono);font-size:11.5px;color:var(--blue-hi);background:rgba(96,165,250,.1);border:1px dashed rgba(96,165,250,.6);padding:0 5px;white-space:nowrap}
+.skills{display:flex;flex-wrap:wrap;gap:8px;max-width:560px}
+.skills span{font-family:var(--f-mono);font-size:12.5px;padding:7px 10px;border:1px solid var(--night-line);background:rgba(16,26,45,.75);color:var(--night-text)}
+.skills span.more{border-style:dashed;background:transparent;color:var(--night-muted)}
+.roles6{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;margin-bottom:16px;max-width:560px}
+.roles6 i{display:block;height:34px;border:1px solid var(--night-line);background:linear-gradient(90deg,rgba(96,165,250,.25) 0 3px,transparent 3px),rgba(16,26,45,.6)}
+.count{display:flex;align-items:baseline;gap:14px;margin-bottom:16px}
+.count b{font-family:var(--f-display);font-stretch:75%;font-weight:800;font-size:clamp(3.2rem,2.2rem + 4vw,6.4rem);line-height:.9;letter-spacing:-.04em;color:#fff;font-variant-numeric:tabular-nums}
+.count span{font-family:var(--f-mono);font-size:12.5px;color:var(--night-muted)}
+.mosaic{display:grid;grid-template-columns:repeat(24,minmax(0,1fr));gap:3px;max-width:470px}
+.mosaic i{display:block;aspect-ratio:1;background:var(--blue-soft)}
+.fchips{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+.fchips span{font-family:var(--f-mono);font-size:12px;padding:4px 9px;border:1px solid rgba(96,165,250,.45);color:var(--blue-hi)}
+.chart{width:100%;max-width:600px;height:auto;display:block}
+.chart .ax{fill:var(--night-muted);font-family:var(--f-mono);font-size:11px}
+.chart .bar{fill:#34405A}
+.chart .bar.hi{fill:var(--blue-hi)}
+.chart .gl{stroke:var(--night-line);stroke-width:1}
+.chart .bl{stroke:var(--blue-hi);stroke-width:1.5;stroke-dasharray:5 4}
+.chart .bll{fill:var(--blue-hi);font-family:var(--f-mono);font-size:11px}
+.docs{position:relative;max-width:600px}
+.paper{background:#fff;color:var(--ink-2);border:1px solid var(--line-2);box-shadow:0 40px 80px -40px rgba(0,0,0,.7)}
+.doc{padding:20px 20px 16px;font-size:14px;line-height:1.55}
+.doc-title{font-family:var(--f-display);font-stretch:90%;font-weight:760;font-size:21px;color:var(--ink);letter-spacing:-.01em}
+.doc-meta{color:var(--muted);font-size:13px}
+.doc-h{margin:14px 0 8px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:4px}
+.doc-sub{display:flex;justify-content:space-between;gap:10px;color:var(--ink);font-size:13.5px}
+.doc-sub span{color:var(--muted);font-size:12.5px;white-space:nowrap}
+.doc ul{margin:8px 0 0;padding-left:16px;display:grid;gap:6px}
+.doc li::marker{color:var(--line-2)}
+.chg{background-image:linear-gradient(transparent 60%,rgba(37,99,235,.16) 60%);background-repeat:no-repeat;background-size:100% 100%}
+.paper .gap-chip{color:var(--blue);background:var(--blue-wash);border-color:rgba(37,99,235,.5)}
+.rcpt{display:flex;flex-wrap:wrap;gap:6px 14px;padding:10px 20px;border-top:1px solid var(--line);background:var(--paper-2);font-family:var(--f-mono);font-size:11.5px;color:var(--muted)}
+.rcpt span b{color:var(--green);font-weight:600}
+.letter{position:relative;margin:14px 0 0 10%;padding:18px 20px;font-size:13.5px;line-height:1.55;color:var(--ink-2)}
+.letter small{display:block;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.letter p{margin:0 0 8px}
+.letter p:last-child{margin:0}
+.p5{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.bigclock{font-family:var(--f-display);font-stretch:70%;font-weight:800;font-size:clamp(4.6rem,2.6rem + 10vw,13rem);line-height:.82;letter-spacing:-.045em;font-variant-numeric:tabular-nums;margin:0}
+.chip{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--blue-hi);border:1px solid rgba(96,165,250,.5);padding:4px 8px;margin-bottom:16px}
+#nightChip{background:#fff;color:var(--blue);border-color:#fff}
+.chip.lt{color:var(--blue);border-color:rgba(37,99,235,.35);background:var(--blue-wash)}
+.ready{max-width:600px;background:#fff;border:1px solid var(--line-2);box-shadow:0 40px 70px -45px rgba(11,18,32,.45);color:var(--ink)}
+.ready-h{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.ready-h b{color:var(--ink);font-weight:600}
+.entry{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:14px;align-items:center;padding:14px 16px}
+.entry+.entry{border-top:1px solid var(--line)}
+.entry b{display:block;font-weight:650;font-size:15.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.entry small{display:block;color:var(--muted);font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pct{font-family:var(--f-display);font-stretch:82%;font-weight:780;font-size:28px;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1}
+.pct.top{color:var(--blue)}
+.yn{display:flex;gap:6px}
+.yn span{width:38px;height:38px;display:grid;place-items:center;border:1px solid var(--line-2);color:var(--muted)}
+.yn span svg{width:16px;height:16px}
+.yn .y{color:var(--green);border-color:rgba(21,128,61,.4)}
+.ready-f{padding:11px 16px;border-top:1px solid var(--line);background:var(--paper-2);font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
+@media (max-width:860px){.pnl,.p5{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:520px){.entry{grid-template-columns:minmax(0,1fr) auto}.entry .yn{display:none}.mosaic{grid-template-columns:repeat(18,minmax(0,1fr));gap:3px}}
+.fx .stage{height:100vh;height:100svh;overflow:hidden}
+.fx .hero-layer{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding-block:calc(var(--hud) + 24px) 32px}
+.fx .hero-meta>*{animation:rise .9s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--d,0) * 90ms + 420ms)}
+.fx .hero-title .w{animation:rise 1s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--d,0) * 80ms + 60ms)}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}}
+.fx .hint{display:flex}
+.fx .horizon{display:block;position:absolute;left:0;top:0;width:100%;height:2px;z-index:4;background:var(--blue-hi);box-shadow:0 0 22px 3px rgba(96,165,250,.55);transform-origin:0 0;opacity:0;pointer-events:none}
+.fx .frame{position:absolute;left:var(--gutter);right:var(--gutter);top:calc(var(--hud) + 16px);bottom:16px;margin:0;display:flex;flex-direction:column;--pw:74}
+.fx:not(.fx-on) .frame{visibility:hidden}
+.fx .f-view{flex:1;overflow:hidden;min-height:0;container-type:inline-size}
+.fx .track{display:flex;height:100%;padding-inline:calc((100 - var(--pw)) / 2 * 1cqw);will-change:transform}
+.fx .pnl{flex:0 0 calc(var(--pw) * 1cqw);height:100%;border-top:0;padding:2vh clamp(12px,2.4vw,40px);align-content:center}
+.fx .f-time{display:flex;align-items:center;gap:16px;height:48px;padding-inline:16px;border-top:1px solid var(--fl);font-family:var(--f-mono);font-size:11px}
+.tl{position:relative;flex:1;height:1px;background:var(--fl)}
+.tfill{position:absolute;inset:0;background:var(--blue-hi);transform-origin:0 50%;transform:scaleX(0)}
+.tick{position:absolute;top:-4px;width:1px;height:9px;background:var(--fl)}
+.tick span{position:absolute;top:13px;left:0;transform:translateX(-50%);white-space:nowrap;opacity:.6}
+.tick:first-child span{transform:none}
+.tick:last-child span{transform:translateX(-100%)}
+.f-time .ends{opacity:.6;white-space:nowrap}
+@media (max-width:860px){
+  .fx .frame{--pw:90;left:10px;right:10px}
+  .fx .pnl{align-content:center;gap:18px}
+  .fx .p-time{font-size:2.4rem;margin-bottom:8px}
+  .fx .p-title{font-size:1.45rem}
+  .fx .p-det{font-size:12px;margin-top:8px}
+  .fx .p4 .skh,.fx .p4 .skl{display:none}
+  .fx .letter{display:none}
+  .fx .bigclock{font-size:5.4rem}
+  .fx .tick span{display:none}
+  .fx .ask{font-size:1.7rem}
+  .fx .p4 .doc{font-size:13px;padding:14px 14px 12px}
+  .fx .p4 .rcpt{padding:8px 14px}
+}
+@media (max-height:920px) and (min-width:861px){
+  .fx .p-time{font-size:3.4rem}
+  .fx .letter{display:none}
+}
+@media (max-height:820px){.fx .hint{display:none}.fx .trust{margin-top:18px;padding-top:14px}.fx .hero-cta{margin-top:26px}}
+.sec{padding-block:clamp(80px,10vw,140px)}
+.alt{background:var(--paper-2)}
+.sec-head{max-width:760px;margin-bottom:clamp(40px,5vw,64px)}
+.meet-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(32px,6vw,96px);align-items:start}
+.meet-head{position:sticky;top:calc(var(--hud) + 40px)}
+.eyebrow-sent{font-size:clamp(1.05rem,1rem + .3vw,1.25rem);color:var(--muted);margin:0 0 16px}
+.meet-body{display:grid;gap:26px;font-size:clamp(1.2rem,1rem + .7vw,1.65rem);line-height:1.5;color:var(--ink-2);max-width:32em}
+.meet-body p{margin:0;text-wrap:pretty}
+.meet-body strong{color:var(--ink);font-weight:650}
+.lead-in{--wd:85;font-family:var(--f-display);font-stretch:calc(var(--wd) * 1%);font-weight:800;font-size:1.3em;letter-spacing:-.015em;color:var(--ink);white-space:nowrap}
+.big-figure{padding-block:24px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);color:var(--ink)!important}
+.big-figure .big{font-family:var(--f-display);font-stretch:74%;font-weight:800;font-size:clamp(3.4rem,2rem + 5vw,6.6rem);line-height:.95;letter-spacing:-.035em;display:block;margin-block:8px 4px;font-variant-numeric:tabular-nums}
+.w-rv{display:inline}
+@media (max-width:860px){.meet-grid{grid-template-columns:minmax(0,1fr)}.meet-head{position:static}}
+.deck{display:grid;grid-template-columns:minmax(0,1fr);gap:28px}
+.wcard{min-width:0}
+.wcard{position:relative;background:#fff;border:1px solid var(--line-2);box-shadow:0 -20px 50px -30px rgba(11,18,32,.25);transform-origin:50% 0}
+.wcard::after{content:"";position:absolute;inset:0;background:var(--night);opacity:var(--dim,0);pointer-events:none}
+.wc-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:18px clamp(18px,3vw,36px);border-bottom:1px solid var(--line)}
+.wc-head h3{margin:0;font-family:var(--f-display);font-stretch:80%;font-weight:800;font-size:clamp(1.8rem,1.3rem + 2vw,3rem);letter-spacing:-.025em;line-height:1}
+.wc-head p{margin:0;font-family:var(--f-mono);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.wc-body{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(24px,4vw,56px);padding:clamp(20px,3vw,36px);align-items:start}
+.wc-body h4{font-family:var(--f-display);font-stretch:85%;font-weight:760;font-size:clamp(1.4rem,1.1rem + 1vw,1.9rem);line-height:1.08;letter-spacing:-.015em;margin:0 0 18px;text-wrap:balance}
+@media (max-width:900px){.wc-body{grid-template-columns:minmax(0,1fr)}}
+@media (min-width:901px) and (min-height:761px){
+  .wcard{position:sticky;top:calc(var(--hud) + 20px + var(--i) * 14px)}
+  .deck{gap:48px}
+}
+.does{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.does li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:12px;color:var(--ink-2);font-size:16px;line-height:1.55}
+.does li svg{width:18px;height:18px;margin-top:4px;color:var(--blue)}
+.does code{font-family:var(--f-mono);font-size:.84em;color:var(--blue);background:var(--blue-wash);border:1px dashed rgba(37,99,235,.45);padding:1px 5px;white-space:nowrap}
+.mock{background:#fff;border:1px solid var(--line-2);box-shadow:0 30px 60px -40px rgba(11,18,32,.4)}
+.m-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;border-bottom:1px solid var(--line);font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.m-bar .t{color:var(--ink);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.m-bar .ex{flex:none;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--line);padding:2px 7px}
+.m-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:11px 14px;border-top:1px solid var(--line);background:var(--paper-2);font-size:14px;color:var(--muted)}
+.sheet{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)}
+@media (max-width:640px){.sheet{grid-template-columns:minmax(0,1fr)}}
+.stub-list{border-left:1px solid var(--line);padding:20px 16px;background:#FBFCFE;font-size:13.5px}
+@media (max-width:640px){.stub-list{border-left:0;border-top:1px solid var(--line)}}
+.stub-list h5{margin:0 0 12px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);font-weight:600}
+.stub-list ol{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.stub-list li{display:grid;grid-template-columns:18px minmax(0,1fr);gap:8px;color:var(--ink-2);line-height:1.45}
+.stub-list li i{font-style:normal;font-family:var(--f-mono);color:var(--blue);font-size:13px}
+.stub-list li.none i,.stub-list li.none b{color:var(--green)}
+.stub-list li.need i{color:var(--muted)}
+.lock{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border:1px solid var(--line-2);color:var(--muted);background:#fff;font-weight:600;font-size:13.5px}
+.lock svg{width:14px;height:14px}
+.row-sum{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px 14px;border-bottom:1px solid var(--line);font-size:14px;color:var(--muted)}
+.row-sum b{color:var(--ink);font-variant-numeric:tabular-nums}
+.row-item{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:14px;align-items:center;padding:13px 14px}
+.row-item+.row-item,.why-box+.row-item{border-top:1px solid var(--line)}
+.row-item b{display:block;color:var(--ink);font-weight:650;font-size:15px}
+.row-item small{display:block;color:var(--muted);font-size:13px}
+.why-box{margin:0 14px 14px;border:1px solid var(--line);background:var(--paper-2);padding:12px 12px 10px}
+.why-box h6{margin:0 0 10px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);font-weight:600}
+.meter{display:grid;grid-template-columns:54px minmax(0,1fr) auto;gap:12px;align-items:center;font-size:13px;margin-bottom:9px}
+.meter .lbl{color:var(--ink);font-weight:600}
+.meter .val{color:var(--muted);font-family:var(--f-mono);font-size:11.5px}
+.mbar{height:6px;background:#E3E8F0;position:relative;overflow:hidden}
+.mbar i{position:absolute;inset:0 auto 0 0;background:var(--blue)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px 66px}
+.chips span{font-family:var(--f-mono);font-size:11px;padding:3px 7px;border:1px solid var(--line-2);background:#fff;color:var(--ink-2)}
+.chips span.have::before{content:"✓ ";color:var(--green)}
+.chips span.gap{color:var(--muted);border-style:dashed;background:transparent}
+.score-note{margin:0 0 10px 66px;font-size:13px;color:var(--ink-2);line-height:1.45}
+.filters{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;padding-top:9px;border-top:1px dashed var(--line-2);font-size:12px;color:var(--muted)}
+.filters span{font-family:var(--f-mono);font-size:11px;color:var(--ink-2);background:#fff;border:1px solid var(--line);padding:2px 7px}
+@media (max-width:520px){.chips,.score-note{margin-left:0}.row-item{grid-template-columns:minmax(0,1fr) auto}.row-item .yn{display:none}}
+.card-b{padding:14px;display:grid;gap:12px}
+.score-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.score-grid div{background:#fff;padding:9px 11px}
+.score-grid small{display:block;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.score-grid b{font-family:var(--f-display);font-stretch:85%;font-weight:760;font-size:24px;color:var(--ink);font-variant-numeric:tabular-nums}
+.score-grid .cur{box-shadow:inset 0 -3px 0 var(--blue)}
+@media (max-width:520px){.score-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.rw-pair{border:1px solid var(--line)}
+.rw-pair .row{display:grid;grid-template-columns:66px minmax(0,1fr);gap:12px;padding:11px 13px;font-size:14px;line-height:1.45}
+.rw-pair .row+.row{border-top:1px solid var(--line)}
+.rw-pair .row small{font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+.rw-pair .before{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line-2)}
+.rw-pair .after{color:var(--ink);font-weight:600}
+.rw-note{border:1px solid var(--line);background:var(--paper-2);padding:11px 13px;font-size:14px;line-height:1.5;color:var(--ink-2)}
+.rw-note small{display:block;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.rw-note .act{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:9px;font-size:12.5px;color:var(--muted)}
+.rw-note .act span:first-child{font-weight:600;color:var(--blue);border:1px solid rgba(37,99,235,.4);padding:5px 10px;background:#fff}
+.form{padding:14px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+@media (max-width:520px){.form{grid-template-columns:minmax(0,1fr)}}
+.fld{display:grid;gap:5px}
+.fld.full{grid-column:1/-1}
+.fld label{font-size:12px;color:var(--muted);font-weight:500}
+.fld .in{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:40px;padding:8px 11px;border:1px solid var(--line-2);font-size:14px;color:var(--ink);background:#fff}
+.fld .in svg{width:15px;height:15px;color:var(--green);flex:none}
+.fld .in .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fld.left .in{border:1px dashed var(--blue);background:var(--blue-wash);color:var(--blue);font-size:13px;min-height:56px;align-items:flex-start}
+.submit{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:var(--ink);color:#fff;font-weight:600;font-size:14px}
+.wc-top{padding:clamp(20px,2.6vw,32px) clamp(18px,3vw,36px) 0;display:grid;gap:8px}
+.wc-who{margin:0;display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.wc-who .chip{margin:0}
+.wc-top h3{margin:0;font-family:var(--f-display);font-stretch:80%;font-weight:800;font-size:clamp(1.9rem,1.3rem + 2.2vw,3.2rem);letter-spacing:-.025em;line-height:1;text-wrap:balance}
+.wc-lede{margin:4px 0 0;color:var(--ink-2);font-size:clamp(1rem,.95rem + .25vw,1.15rem);max-width:62ch}
+.proofs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;padding:clamp(18px,2.4vw,28px) clamp(18px,3vw,36px) clamp(20px,2.6vw,32px)}
+.proofs.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:980px){
+  .proofs,.proofs.two{display:flex;overflow-x:auto;contain:paint;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;gap:12px;scroll-padding-inline:clamp(18px,3vw,36px)}
+  .proofs::-webkit-scrollbar{display:none}
+  .proof{flex:0 0 min(84%,420px);scroll-snap-align:start}
+  .wc-top .swipe{display:flex}
+}
+.proof{margin:0;display:flex;flex-direction:column;border:1px solid var(--line-2);background:#fff;min-width:0}
+.pf-h{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 12px;border-bottom:1px solid var(--line);font-family:var(--f-mono);font-size:11.5px;color:var(--ink)}
+.pf-h .ex{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);padding:1px 6px;flex:none}
+.pf-b{padding:12px;flex:1;display:grid;gap:10px;align-content:start;font-size:14px}
+.proof figcaption{padding:10px 12px;border-top:1px solid var(--line);background:var(--paper-2);font-size:13.5px;color:var(--ink-2);line-height:1.45}
+.tag-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:7px 10px;border:1px solid var(--line)}
+.tag-row b{font-weight:600;color:var(--ink)}
+.cnt{min-width:26px;height:22px;display:grid;place-items:center;font-family:var(--f-mono);font-size:11.5px;font-weight:600;color:var(--blue);background:var(--blue-wash);border:1px solid rgba(37,99,235,.3)}
+.tag-proof{margin:-6px 0 0;padding:8px 10px 9px;border:1px solid var(--line);border-top:0;background:#FBFCFE;font-size:13px;color:var(--ink-2);line-height:1.45}
+.tag-proof q{quotes:"“" "”"}
+.tag-proof small{display:block;margin-top:5px;font-family:var(--f-mono);font-size:10.5px;color:var(--muted)}
+.score-grid.sm{grid-template-columns:repeat(2,minmax(0,1fr))}
+.score-grid.sm b{font-size:22px}
+.proof .rw-pair .row{grid-template-columns:58px minmax(0,1fr);font-size:13.5px}
+.proof .rw-note{font-size:13.5px}
+.doc.sm{padding:12px;font-size:13.5px}
+.doc.sm ul{margin:0}
+.mini-stub{display:flex;flex-wrap:wrap;gap:4px 14px;font-family:var(--f-mono);font-size:11px;color:var(--muted)}
+.mini-stub b{color:var(--green)}
+.doc.sm .lock{justify-self:start}
+.note-sm{font-size:13.5px;line-height:1.55;color:var(--ink-2)}
+.note-sm p{margin:0}
+.form.sm{grid-template-columns:minmax(0,1fr);padding:12px;gap:8px}
+.form.sm .fld .in{min-height:34px;padding:6px 10px;font-size:13.5px}
+.form.sm .fld.left .in{min-height:34px}
+.form-f{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:13px;color:var(--muted);padding-top:4px}
+.form-f .submit{padding:6px 12px;font-size:13px}
+.score-big{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.score-big .pct{font-size:40px;color:var(--ink-2)}
+.score-big span:last-child{font-size:13.5px;color:var(--muted)}
+.proof .chips,.proof .score-note{margin-left:0}
+.plan-list{gap:8px}
+.pl{display:grid;grid-template-columns:18px minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 10px;border:1px solid var(--line);font-size:13.5px;color:var(--ink)}
+.pl i{width:14px;height:14px;border:1.5px solid var(--line-2)}
+.pl.done span{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line-2)}
+.pl.done i{background:var(--green);border-color:var(--green)}
+.pl em{font-style:normal;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.next-step{margin:4px 0 0;padding:9px 11px;background:var(--blue-wash);border:1px solid rgba(37,99,235,.25);font-size:13.5px;color:var(--ink-2)}
+.next-step b{color:var(--blue)}
+.activity{font-family:var(--f-mono);font-size:12.5px;gap:8px;color:var(--ink-2)}
+.activity p{margin:0;display:grid;grid-template-columns:44px minmax(0,1fr);gap:8px}
+.activity time{color:var(--muted)}
+.activity b{color:var(--blue);font-weight:600}
+.row-mini{gap:0;padding:0}
+.row-mini .row-item{grid-template-columns:minmax(0,1fr) auto;padding:10px 12px}
+.row-mini .row-item+.row-item{border-top:1px solid var(--line)}
+.row-mini .pct{font-size:24px}
+.row-yn-item{display:flex;gap:6px;padding:10px 12px;border-top:1px solid var(--line)}
+.row-yn-item span{flex:1;text-align:center;padding:6px;border:1px solid var(--line-2);font-size:13px;color:var(--muted)}
+.row-yn-item .y{color:var(--green);border-color:rgba(21,128,61,.4)}
+.digest b{font-family:var(--f-display);font-stretch:88%;font-weight:760;font-size:18px;color:var(--ink)}
+.digest ul{margin:0;padding-left:16px;display:grid;gap:6px;font-size:13.5px;color:var(--ink-2)}
+.digest small{font-family:var(--f-mono);font-size:11px;color:var(--blue)}
+.swipe{display:none;align-items:center;gap:8px;margin:2px 0 0;font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.swipe::after{content:"→";font-family:var(--f-body);letter-spacing:0}
+.conv{position:relative}
+.fx .conv{min-height:100vh;min-height:100svh;display:flex;align-items:center;padding-block:calc(var(--hud) + 16px) 24px}
+.conv-in{width:100%}
+.conv-stage{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:8px}
+.pro{position:relative;background:#fff;border:1px solid var(--line-2);padding:18px 18px 16px;display:grid;gap:6px}
+.pro small{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.pro b{font-family:var(--f-display);font-stretch:85%;font-weight:760;font-size:22px;letter-spacing:-.01em;color:var(--ink)}
+.pro .cost{position:relative;justify-self:start;font-family:var(--f-display);font-stretch:80%;font-weight:700;font-size:26px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.pro p{margin:0;font-size:14px;color:var(--muted)}
+.one{grid-column:1/-1;background:var(--ink);color:#fff;padding:22px 22px 20px;display:grid;gap:8px;border:1px solid var(--ink)}
+.one .top{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px}
+.one .top svg{width:22px;height:22px}
+.one .cost{font-family:var(--f-display);font-stretch:78%;font-weight:800;font-size:clamp(2.4rem,1.6rem + 3vw,3.6rem);line-height:1;letter-spacing:-.03em;color:var(--blue-hi)}
+.one p{margin:0;color:var(--night-muted);font-size:15px}
+.fx .one{position:absolute;left:50%;top:50%;width:min(480px,92%);grid-column:auto;z-index:2}
+.conv-line{margin:28px auto 0;text-align:center;font-family:var(--f-display);font-stretch:88%;font-weight:720;font-size:clamp(1.3rem,1.1rem + .9vw,1.9rem);letter-spacing:-.012em;color:var(--ink);text-wrap:balance;max-width:30ch}
+@media (max-width:760px){
+  .conv-stage{grid-template-columns:minmax(0,1fr);gap:10px}
+  .pro{padding:12px 14px;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:2px 12px}
+  .pro small{grid-column:1/-1}
+  .pro b{font-size:18px}
+  .pro .cost{font-size:19px;grid-row:2;grid-column:2}
+  .pro p{display:none}
+}
+.cmp-scroll{overflow-x:auto;contain:paint;border:1px solid var(--line-2);background:#fff;margin-top:clamp(40px,6vw,72px)}
+.cmp{width:100%;min-width:780px;border-collapse:collapse;font-size:15px}
+.cmp th,.cmp td{padding:15px 16px;text-align:left;vertical-align:middle;border-bottom:1px solid var(--line)}
+.cmp thead th{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--paper-2)}
+.cmp tbody th{font-weight:600;color:var(--ink);position:sticky;left:0;background:#fff;z-index:1;min-width:170px}
+.cmp td{color:var(--muted)}
+.cmp .d{background:var(--blue-wash);color:var(--ink);font-weight:600;border-left:1px solid rgba(37,99,235,.2)}
+.cmp thead .d{background:var(--ink);color:#fff;font-family:var(--f-display);font-stretch:88%;font-size:17px;letter-spacing:-.005em;text-transform:none;font-weight:760}
+.cmp tr:last-child th,.cmp tr:last-child td{border-bottom:0}
+.cmp .cost-r td{font-weight:600;color:var(--ink-2)}
+.cmp .cost-r .d{color:var(--blue);font-family:var(--f-display);font-stretch:88%;font-size:19px;font-weight:780}
+.ic{display:inline-flex;align-items:center;gap:7px}
+.ic svg{width:16px;height:16px;flex:none}
+.ic.y svg{color:var(--green)}
+.cmp .d .ic.y svg{color:var(--blue)}
+.ic.n svg{color:#A3ACBA}
+.cmp-foot{display:flex;justify-content:flex-end;margin-top:28px}
+.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--line-2);background:#fff}
+@media (max-width:900px){.plans{grid-template-columns:minmax(0,1fr)}}
+.plan{padding:28px 26px 26px;display:flex;flex-direction:column;gap:18px;position:relative}
+.plan+.plan{border-left:1px solid var(--line-2)}
+@media (max-width:900px){.plan+.plan{border-left:0;border-top:1px solid var(--line-2)}}
+.plan.hl{background:var(--night);color:var(--night-text);margin:-1px;border:1px solid var(--night)}
+.plan-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.plan-name{font-family:var(--f-display);font-stretch:88%;font-weight:760;font-size:22px;letter-spacing:-.01em}
+.badge{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;padding:4px 8px;border:1px solid var(--line-2);color:var(--muted)}
+.badge.free{color:var(--green);border-color:rgba(21,128,61,.35)}
+.plan.hl .badge{color:var(--blue-hi);border-color:rgba(96,165,250,.45)}
+.plan-price{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.plan-price b{font-family:var(--f-display);font-stretch:78%;font-weight:800;font-size:52px;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.plan-price span{font-size:14px;color:var(--muted)}
+.plan.hl .plan-price span{color:var(--night-muted)}
+.plan .desc{margin:-8px 0 0;color:var(--muted);font-size:15px}
+.plan.hl .desc{color:var(--night-muted)}
+.plan ul{list-style:none;margin:0;padding:18px 0 0;border-top:1px solid var(--line);display:grid;gap:11px;font-size:15px;flex:1}
+.plan.hl ul{border-top-color:var(--night-line)}
+.plan li{display:grid;grid-template-columns:18px minmax(0,1fr);gap:10px;line-height:1.45}
+.plan li svg{width:16px;height:16px;margin-top:3px;color:var(--blue)}
+.plan.hl li svg{color:var(--blue-hi)}
+.plan li.x{color:var(--muted)}
+.plan li.x svg{color:#A3ACBA}
+.plan .note{font-size:13px;color:var(--muted);margin:0}
+.plan.hl .note{color:var(--night-muted)}
+.plan .btn{width:100%}
+.plan.hl .btn-ghost{background:#fff;color:var(--ink);border-color:#fff}
+.plan.hl .btn-ghost:hover{background:var(--blue-wash);border-color:var(--blue-wash)}
+.partner{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(28px,5vw,72px);align-items:end}
+@media (max-width:860px){.partner{grid-template-columns:minmax(0,1fr)}}
+.partner h2{font-size:clamp(1.8rem,1.1rem + 2.2vw,2.9rem)}
+.partner p{margin:20px 0 0;font-size:clamp(1.05rem,1rem + .3vw,1.2rem);color:var(--ink-2);max-width:52ch;text-wrap:pretty}
+.why{--wbg:rgb(6,10,20);background:var(--wbg);color:var(--night-text);padding-block:clamp(88px,10vw,140px);overflow:hidden}
+.why-head{color:#fff;transition:color .45s}
+.why .h2{color:inherit}
+.why .h2 .accent{color:var(--blue-hi);transition:color .45s}
+.why .sub{color:inherit;opacity:.72}
+.fx .why:not(.lit) .why-head{color:var(--ink)}
+.fx .why:not(.lit) .h2 .accent{color:var(--blue)}
+.why-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end;margin-bottom:clamp(40px,5vw,64px)}
+@media (max-width:760px){.why-head{grid-template-columns:minmax(0,1fr)}}
+.src{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;color:inherit;opacity:.72;border:1px solid currentColor;padding:8px 12px;max-width:34ch;margin:0}
+.rows{display:grid;gap:16px}
+.row{overflow-x:auto;scrollbar-width:none;padding-inline:var(--gutter)}
+.row::-webkit-scrollbar{display:none}
+.row-in{display:flex;gap:16px;width:max-content;will-change:transform}
+.fx .row{overflow:visible;padding-inline:0}
+.q{flex:0 0 auto;width:clamp(270px,26vw,380px);margin:0;padding:20px 20px 16px;background:var(--night-2);border:1px solid var(--night-line);display:flex;flex-direction:column;justify-content:space-between;gap:14px}
+.q:nth-child(4n+3){background:#fff;border-color:#fff}
+.q:nth-child(4n+3) blockquote{color:var(--ink-2)}
+.q:nth-child(4n+3) figcaption{color:var(--muted)}
+.q blockquote{margin:0;font-size:15.5px;line-height:1.55;color:var(--night-text);text-wrap:pretty}
+.q figcaption{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.04em;color:var(--night-muted)}
+.close{--cbg:rgb(6,10,20);--cfg:rgb(255,255,255);--cmu:rgb(142,152,171);background:var(--cbg);color:var(--cfg);padding-block:clamp(96px,12vw,170px)}
+.close-in{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:32px 48px;align-items:end}
+@media (max-width:860px){.close-in{grid-template-columns:minmax(0,1fr)}}
+.close h2{font-size:clamp(2.6rem,1.2rem + 5vw,6rem);color:var(--cfg)}
+.close h2 .cursor{color:#fff}
+.close p{margin:20px 0 0;font-size:clamp(1.05rem,1rem + .35vw,1.25rem);color:var(--cmu);max-width:44ch}
+.close .micro{margin-top:16px;font-size:14px}
+footer{background:var(--night);color:var(--night-muted);font-size:14.5px;border-top:1px solid var(--night-line)}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;padding-block:32px}
+.foot nav{display:flex;flex-wrap:wrap;gap:4px 8px}
+.foot nav a{text-decoration:none;color:var(--night-muted);padding:10px 8px;min-height:44px;display:inline-flex;align-items:center}
+.foot nav a:hover{color:#fff}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .cursor{animation:none}
+}
+body{background:var(--night);color:var(--night-text)}
+.kicker{color:var(--night-muted)}
+.sub{color:var(--night-muted)}
+.accent{color:var(--blue-hi)}
+.plans,.cmp-scroll,.face,.ready{color:var(--ink)}
+.btn-line{background:transparent;color:#fff;border-color:rgba(255,255,255,.55)}
+.btn-line:hover{background:rgba(255,255,255,.08);border-color:#fff}
+#sig{display:none;position:fixed;left:0;top:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.fx #sig{display:block}
+main,footer{position:relative;z-index:1}
+.legend{display:inline-flex;align-items:center;gap:9px;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--night-muted)}
+.legend i{width:10px;height:2px;background:#fff;flex:none}
+@media (max-width:900px){.legend{display:none}}
+.chap{position:relative;display:flex;align-items:center;padding-block:calc(var(--hud) + 40px) 64px}
+.chap>.wrap{width:100%}
+.fx .chap{min-height:100vh;min-height:100svh}
+.readout{max-width:470px;background:rgba(6,10,20,.86);border:1px solid var(--night-line);padding:22px 24px 20px;box-shadow:0 40px 80px -40px rgba(0,0,0,.9)}
+.ro-tag{display:inline-block;margin:0 0 14px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--night-muted);border:1px solid var(--night-line);padding:3px 8px}
+.ro-t{margin:0 0 12px;font-family:var(--f-mono);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-hi)}
+.ro-h{margin:0;font-family:var(--f-display);font-stretch:84%;font-weight:780;font-size:clamp(1.7rem,1.2rem + 1.7vw,2.7rem);line-height:1.02;letter-spacing:-.02em;color:#fff;text-wrap:balance}
+.ro-q{margin:0;font-size:clamp(1.35rem,1.1rem + 1vw,1.9rem);line-height:1.25;font-weight:500;color:#fff;border-left:3px solid #fff;padding-left:.55em}
+.ro-q .cursor{color:#fff}
+.ro-d{margin:12px 0 0;font-family:var(--f-mono);font-size:13px;line-height:1.6;color:var(--night-muted)}
+.ro-k{margin:14px 0 0;padding-top:12px;border-top:1px dashed var(--night-line);display:flex;align-items:center;gap:10px;font-family:var(--f-mono);font-size:12px;color:var(--night-text)}
+.ro-k i{width:12px;height:3px;background:var(--blue-hi);flex:none}
+.ro-k i.w{background:#fff}
+@media (max-width:760px){
+  .fx .chap{align-items:flex-end;padding-bottom:6vh}
+  .readout{max-width:none}
+}
+.hero3{position:relative}
+.hero3::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 60% 70% at 18% 55%,rgba(6,10,20,.9) 0%,rgba(6,10,20,.55) 45%,rgba(6,10,20,0) 80%)}
+.hero3>.wrap{position:relative}
+.fx .hero3 .hint{display:flex}
+.caption{position:absolute;right:var(--gutter);bottom:28px;margin:0;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--night-muted);display:flex;align-items:center;gap:9px}
+.caption i{width:10px;height:2px;background:#fff}
+@media (max-width:760px){
+  .hero3::before{background:linear-gradient(0deg,rgba(6,10,20,.94) 0%,rgba(6,10,20,.8) 45%,rgba(6,10,20,0) 78%)}
+  .caption{display:none}
+}
+.ready-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(24px,5vw,72px);align-items:center}
+.ready-grid .ready{justify-self:end;width:100%;max-width:560px}
+@media (max-width:860px){.ready-grid{grid-template-columns:minmax(0,1fr)}.ready-grid .ready{order:-1;justify-self:stretch}}
+.panel{max-width:580px;background:rgba(6,10,20,.86);border:1px solid var(--night-line);padding:28px 28px 26px}
+.panel .eyebrow-sent{color:var(--night-muted);margin:0 0 12px}
+.panel .h2{color:#fff}
+.meet-p{margin:18px 0 0;font-size:clamp(1.05rem,1rem + .35vw,1.25rem);line-height:1.55;color:#C9D0DC}
+.meet-p .lead-in{color:#fff}
+.meet-p strong{color:#fff;font-weight:650}
+.chap-center .panel{margin-inline:auto;text-align:center;max-width:760px}
+.fx .chap-center{align-items:flex-end;padding-bottom:9vh}
+.big-line{margin:0;font-family:var(--f-display);font-stretch:84%;font-weight:760;font-size:clamp(1.4rem,1.1rem + 1.3vw,2.3rem);line-height:1.18;letter-spacing:-.012em;color:#fff;text-wrap:balance}
+.big-line .num{color:var(--blue-hi)}
+.big-line .free{color:var(--green-hi)}
+.small-line{margin:14px 0 0;color:#C9D0DC;font-size:clamp(1rem,.95rem + .3vw,1.15rem)}
+.small-line strong{color:#fff}
+.prism-sec{position:relative;padding-block:clamp(80px,10vw,140px)}
+.pr-grid{max-width:1400px;margin-inline:auto;padding-inline:var(--gutter);display:grid;grid-template-columns:minmax(0,1fr);gap:36px}
+.pr-head .h2{color:#fff}
+.pr-steps{list-style:none;margin:28px 0 0;padding:0;display:none}
+.pr-step{width:100%;display:grid;grid-template-columns:3px minmax(0,1fr);gap:14px;padding:10px 0;background:none;border:0;text-align:left;color:var(--night-muted);cursor:pointer;font:inherit;min-height:44px}
+.pr-step i{background:var(--night-line);transition:background-color .3s}
+.pr-step small{display:block;font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;transition:color .3s}
+.pr-step b{display:block;margin-top:4px;font-family:var(--f-display);font-stretch:86%;font-weight:720;font-size:19px;line-height:1.15;color:var(--night-muted);transition:color .3s}
+.pr-step.on i{background:#fff}
+.pr-step.on b{color:#fff}
+.pr-step.on small{color:var(--blue-hi)}
+.prism{display:grid;gap:22px}
+.face{position:relative;background:#fff;border:1px solid var(--line-2);min-width:0}
+.face::after{content:"";position:absolute;inset:0;background:var(--night);opacity:var(--shade,0);pointer-events:none}
+@media (min-width:1000px) and (min-height:680px){
+  .fx .prism-sec{height:100vh;height:100svh;padding-block:calc(var(--hud) + 18px) 18px;display:flex;align-items:center}
+  .fx .pr-grid{width:100%;grid-template-columns:290px minmax(0,1fr);gap:44px;align-items:center}
+  .fx .pr-head .sub{font-size:1rem}
+  .fx .pr-steps{display:grid;gap:2px}
+  .fx .stage3d{perspective:2200px;perspective-origin:50% 50%}
+  .fx .prism{display:block;position:relative;height:var(--h,560px);transform-style:preserve-3d;transform:translateZ(calc(var(--h,560px) / -2)) rotateX(calc(var(--rx,0) * 1deg))}
+  .fx .face{position:absolute;left:0;top:0;width:100%;height:var(--h,560px);overflow:hidden;-webkit-backface-visibility:hidden;backface-visibility:hidden;transform:rotateX(calc(var(--i) * -90deg)) translateZ(calc(var(--h,560px) / 2))}
+  .fx .prism.measure{transform:none;height:auto}
+  .fx .prism.measure .face{position:relative;height:auto;transform:none}
+  .fx .face .wc-top h3{font-size:clamp(1.8rem,1.2rem + 1.6vw,2.6rem)}
+  .fx .face .proofs{padding-top:16px;padding-bottom:18px}
+  .fx .face .pf-b{font-size:13.5px}
+}
+.tun{padding-block:clamp(80px,10vw,140px)}
+.tun-head .h2{color:#fff}
+.tun-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:40px}
+.tq{margin:0;padding:20px 20px 16px;background:var(--night-2);border:1px solid var(--night-line);display:flex;flex-direction:column;justify-content:space-between;gap:14px}
+.tq blockquote{margin:0;font-size:15.5px;line-height:1.55;color:var(--night-text);text-wrap:pretty}
+.tq figcaption{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.04em;color:var(--night-muted)}
+.tq.lt{background:#fff;border-color:#fff}
+.tq.lt blockquote{color:var(--ink-2)}
+.tq.lt figcaption{color:var(--muted)}
+.fx .tun{height:100vh;height:100svh;padding:0;position:relative;overflow:hidden;perspective:1000px;perspective-origin:50% 55%}
+.fx .tun-head{position:absolute;left:0;right:0;top:0;padding-top:calc(var(--hud) + 28px);padding-bottom:48px;z-index:3;background:linear-gradient(180deg,rgba(6,10,20,.96) 0%,rgba(6,10,20,.85) 60%,rgba(6,10,20,0) 100%)}
+.fx .tun-cards{position:absolute;inset:0;margin:0;display:block;transform-style:preserve-3d}
+.fx .tq{position:absolute;left:50%;top:58%;width:min(380px,82vw);will-change:transform,opacity}
+.cmp3{padding-block:clamp(80px,10vw,140px) 40px}
+.cmp3-head .h2{color:#fff}
+.labs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:32px}
+.lab{border:1px solid var(--night-line);padding:14px 16px;background:rgba(6,10,20,.8)}
+.lab small{display:block;font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--night-muted)}
+.lab b{display:block;margin-top:4px;font-family:var(--f-display);font-stretch:86%;font-weight:760;font-size:20px;color:#fff}
+.lab span{display:block;margin-top:2px;font-family:var(--f-display);font-stretch:84%;font-weight:600;font-size:19px;color:#C9D0DC;font-variant-numeric:tabular-nums}
+.one3{margin:28px auto 0;text-align:center;max-width:620px}
+.one3 .who{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:18px;color:#fff}
+.one3 .who svg{width:22px;height:22px}
+.one3 .cost{display:block;margin-top:6px;font-family:var(--f-display);font-stretch:78%;font-weight:800;font-size:clamp(2.2rem,1.5rem + 3vw,3.6rem);line-height:1;letter-spacing:-.03em;color:#fff}
+.one3 .what{margin:8px 0 0;color:var(--night-muted);font-size:15px}
+.one3 .line{margin:22px auto 0;font-family:var(--f-display);font-stretch:88%;font-weight:720;font-size:clamp(1.25rem,1.05rem + .9vw,1.8rem);letter-spacing:-.012em;color:#fff;text-wrap:balance;max-width:30ch}
+.fx .cmp3{height:100vh;height:100svh;padding:0;position:relative}
+.fx .cmp3-head{position:absolute;left:0;right:0;top:calc(var(--hud) + 28px);z-index:2}
+.fx .labs{display:block;margin:0}
+.fx .lab{position:absolute;width:220px;margin-left:-110px;text-align:center;background:transparent;border:0;padding:0}
+.fx .one3{position:absolute;left:0;right:0;width:min(620px,92vw);margin:0 auto}
+@media (max-width:760px){
+  .labs{grid-template-columns:minmax(0,1fr)}
+  .fx .cmp3-head .sub{display:none}
+  .fx .lab{width:31vw;margin-left:-15.5vw}
+  .fx .lab b{font-size:14.5px}
+  .fx .lab span{font-size:14px}
+  .fx .lab small{font-size:10px;letter-spacing:.06em}
+}
+.cmp3-table{padding-bottom:clamp(80px,10vw,140px)}
+.sec3{padding-block:clamp(80px,10vw,140px)}
+.sec3 .h2,.sec3 h2{color:#fff}
+.partner3 p{color:#C9D0DC}
+.close3{background:transparent;padding-block:calc(var(--hud) + 40px) 64px}
+.fx .close3{min-height:100vh;min-height:100svh;display:flex;align-items:flex-end;padding-bottom:12vh}
+.close3>.wrap{width:100%}
+</style>
+
+<header class="hud" id="hud">
+  <div class="hud-l">
+    <a class="brand" href="#top" aria-label="Lorem, anim ex nec">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2" y="3" width="20" height="18" rx="2" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Lorem</span>
+    </a>
+    <span class="legend"><i></i>Eros sit et e nec aliquip</span>
+  </div>
+  <nav class="hud-r" aria-label="Ante">
+    <a class="signin" href="#">Esse id</a>
+    <a class="btn btn-primary btn-sm hud-cta" href="#">Nec Gravida Esse</a>
+  </nav>
+  <i class="hud-progress" id="hudProgress" aria-hidden="true"></i>
+</header>
+
+<canvas id="sig" aria-hidden="true"></canvas>
+
+<main id="top">
+
+<section class="chap hero3" data-f="cloud" id="ch-hero" aria-label="Ac EX labore egestas, egestas qui sed">
+  <div class="wrap">
+    <div class="hero-meta"><p class="status" style="--d:0"><span class="dot" aria-hidden="true"></span>Do ante labore nec magna</p></div>
+    <h1 class="display hero-title"><span class="w" style="--d:0">Ac</span> <span class="w nowrap" style="--d:1"><span class="accent">EX Labore Egestas</span>,</span> <span class="w" style="--d:2">Egestas</span> <span class="w" style="--d:3">qui</span> <span class="w" style="--d:4">Sed<span class="cursor" aria-hidden="true"></span></span></h1>
+    <div class="hero-meta">
+      <p class="hero-sub" style="--d:1">Ex anim nec labore quis, id sed nec ut sunt orci quis.</p>
+      <div class="hero-cta" style="--d:2">
+        <a class="btn btn-primary btn-xl" href="#">Nec Gravida Esse
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg>
+        </a>
+        <a class="try" href="#">Sit ex eiusmod varius</a>
+      </div>
+      <p class="offer" style="--d:3"><span>Ac veniam eros maecenas</span><span>5 gravida esse EX veniam, curae velit, qui sint</span></p>
+      <p class="trust" style="--d:4">Eros ante <b>10,000</b> reprehenderit incididunt.</p>
+      <p class="hint" style="--d:5" aria-hidden="true"><i></i>Cillum — dolor ex quis</p>
+    </div>
+  </div>
+  <p class="caption" aria-hidden="true"><i></i>Eros sit et e nec aliquip · exercitation</p>
+</section>
+
+<section class="chap" data-f="grid" id="ch-2">
+  <div class="wrap">
+    <div class="readout">
+      <span class="ro-tag">Integer gravida · Excepteur &amp; Posuere</span>
+      <p class="ro-t">21:01 · Sed</p>
+      <p class="ro-q">“E esse e aliqua ultricies amet. Nec Quis ex nullam.”<span class="cursor" aria-hidden="true"></span></p>
+      <p class="ro-d">Posuere’a lacus occaecat, non sit eros. Malesuada id esse integer sed hendrerit.</p>
+    </div>
+  </div>
+</section>
+
+<section class="chap" data-f="matched" id="ch-3">
+  <div class="wrap">
+    <div class="readout">
+      <p class="ro-t">21:03</p>
+      <h2 class="ro-h">Maecenas lacus occaecat</h2>
+      <p class="ro-d">Nec Quis ex nullam · 212 egestas sunt laborum</p>
+      <p class="ro-k"><i></i>Eros amet sit et non ea nec 212</p>
+    </div>
+  </div>
+</section>
+
+<section class="chap" data-f="chart" id="ch-4">
+  <div class="wrap">
+    <div class="readout">
+      <p class="ro-t">21:07</p>
+      <h2 class="ro-h">Sint 40 id nisi laboris sunt ullamco</h2>
+      <p class="ro-d">3 lorem sunt 80% sit</p>
+      <p class="ro-k"><i></i>Eros sit et e aliquip; sed labore et nec qui</p>
+    </div>
+  </div>
+</section>
+
+<section class="chap" data-f="cards" id="ch-5">
+  <div class="wrap ready-grid">
+    <div class="readout">
+      <span class="ro-tag">Integer · Excepteur &amp; Posuere</span>
+      <p class="ro-t">07:00 · Sunt Velit Turpis</p>
+      <h2 class="ro-h">Nulla qui sunt ✓ / ✗</h2>
+      <p class="ro-d">3 donec · eiusmod et orci eiusmod sed</p>
+    </div>
+    <div class="ready" id="readyCard">
+      <div class="ready-h"><b>Velit Turpis · Laboris</b><span>3 nostrud sunt sit</span></div>
+      <div class="entry"><div><b>Aliqua Ante Officia</b><small>Laboris Donec Fugiat · Nullam (AD)</small></div><span class="pct top">91%</span>
+        <span class="yn" aria-hidden="true"><span class="y"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg></span><span><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg></span></span></div>
+      <div class="entry"><div><b>Ultricies Amet</b><small>Nulla Hendrerit · Nec Consequat</small></div><span class="pct">86%</span>
+        <span class="yn" aria-hidden="true"><span class="y"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg></span><span><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg></span></span></div>
+      <div class="entry"><div><b>Aliqua Gravida Officia</b><small>Proident Accumsan · Nullam (AD)</small></div><span class="pct">82%</span>
+        <span class="yn" aria-hidden="true"><span class="y"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg></span><span><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg></span></span></div>
+      <div class="ready-f">Eiusmod et orci eiusmod sed</div>
+    </div>
+  </div>
+</section>
+
+<section class="chap" data-f="markMeet" id="ch-6">
+  <div class="wrap">
+    <div class="panel">
+      <p class="eyebrow-sent">Donec officia sed irure odio esse.</p>
+      <h2 class="display h2">Ante Sunt <span class="accent">Labore Egestas</span></h2>
+      <p class="meet-p">Sunt turpis ex proident, sunt Enim ex condimentum, nec anim adipiscing mauris id nec nulla felis non lacus id luctus: <span class="lead-in">esse interdum.</span></p>
+      <p class="meet-p">Esse enim mauris — AC consectetur, labore integer, commodo eiusmod, nulla senectus — sed egestas luctus nec turpis ex quisque ipsum nullam non vestibulum ipsum quisque.</p>
+    </div>
+  </div>
+</section>
+
+<section class="chap chap-center" data-f="k10" id="ch-k10">
+  <div class="wrap">
+    <div class="panel">
+      <p class="big-line">Enim esse ea esse odio <span class="num">$10,000+</span> e velit do maecenas.</p>
+    </div>
+  </div>
+</section>
+
+<section class="chap chap-center" data-f="free" id="ch-free">
+  <div class="wrap">
+    <div class="panel">
+      <p class="big-line">Lorem curae sed ac EX labore egestas qui anim enim quis — do ante labore nec magna, <span class="free">deserunt esse.</span></p>
+      <p class="small-line">Amet elit enim, sed nec ex <strong>ipsum do sunt felis</strong> — curae sunt labore egestas minim do adipiscing quis.</p>
+    </div>
+  </div>
+</section>
+
+<section class="prism-sec" id="work">
+  <div class="pr-grid">
+    <div class="pr-head">
+      <p class="kicker">Amet ex anim</p>
+      <h2 class="display h2">Nec labore quis, ante qui sed</h2>
+      <p class="sub">Ex anim nec quis e nulla egestas, e semper non e donec felis ut — non odio sunt semper cillum. Sunt netus, minim senectus amet.</p>
+      <div class="pr-steps" role="list">
+        <button class="pr-step on" type="button" role="listitem"><i></i><span><small>E nulla egestas’a quis</small><b>Et felis qui amet sed’id ante</b></span></button>
+        <button class="pr-step" type="button" role="listitem"><i></i><span><small>E semper’a quis</small><b>Sed sunt orci do curae consectetur</b></span></button>
+        <button class="pr-step" type="button" role="listitem"><i></i><span><small>E donec’a quis</small><b>Sunt culpa ex sed</b></span></button>
+        <button class="pr-step" type="button" role="listitem"><i></i><span><small>Nec semper cillum</small><b>Nec aliquip, ante curae sed fames</b></span></button>
+      </div>
+    </div>
+    <div class="stage3d">
+      <div class="prism" id="prism">
+<article class="face" style="--i:0" id="f-1">
+        <header class="wc-top">
+          <p class="wc-who">E nulla egestas’a quis</p>
+          <h3>Et felis qui amet sed’id ante</h3>
+          <p class="wc-lede">Nec fames mauris amet sed odio sunt ullamco anim amet sed’id pharetra ante.</p>
+        </header>
+        <div class="proofs">
+          <figure class="proof">
+            <div class="pf-h"><span>Mollit Ullamco</span><span class="ex">Integer</span></div>
+            <div class="pf-b">
+              <div class="tag-row"><b>SIT</b><span class="cnt" data-count="4">4</span></div>
+              <div class="tag-proof"><q>Integer veniam aliquip tristique id SIT non Cillum, ullamco elit sunt nec nisi ex nec morbi.</q><small>Sunt sunt veniam — esse amet irure SIT</small></div>
+              <div class="tag-row"><b>Hendrerit accumsan</b><span class="cnt" data-count="3">3</span></div>
+              <div class="tag-row"><b>Semper</b><span class="cnt" data-count="3">3</span></div>
+              <div class="tag-row"><b>Cillum</b><span class="cnt" data-count="2">2</span></div>
+            </div>
+            <figcaption>Curae ipsum enim ex nec amet ea sunt veniam enim mauris ex.</figcaption>
+          </figure>
+          <figure class="proof">
+            <div class="pf-h"><span>Proident · ullamco dolore</span><span class="ex">Integer</span></div>
+            <div class="pf-b">
+              <div class="score-grid sm">
+                <div class="cur"><small>Bibendum</small><b data-count="48">48</b></div>
+                <div><small>Nulla</small><b data-count="61">61</b></div>
+              </div>
+              <div class="rw-pair">
+                <div class="row"><small>Qui</small><span class="before">Ante Officia | SIT | Velit | Adipiscing nulla ante</span></div>
+                <div class="row"><small>Eiusmod</small><span class="after">Aliqua Ante Officia — hendrerit non posuere accumsan enim gravida dolor nec do</span></div>
+              </div>
+            </div>
+            <figcaption>E dolor, e curae aliquip non occaecat pharetra, aliquip do aliquip.</figcaption>
+          </figure>
+          <figure class="proof">
+            <div class="pf-h"><span>Ullamco nulla</span><span class="ex">Integer</span></div>
+            <div class="pf-b">
+              <div class="rw-note">
+                <small>Do e orci nulla minim</small>
+                Ac nec nec sunt lacus odio turpis culpa: nec minim nullam ac id velit 13, nec velit 2. Consequat do eiusmod nisi et amet sunt ex pretium.
+                <div class="act"><span>Orci nulla</span><span>Sed orci ex</span></div>
+              </div>
+            </div>
+            <figcaption>Ultrices non morbi enim morbi elit sed, sunt sunt sed vestibulum.</figcaption>
+          </figure>
+        </div>
+      </article>
+<article class="face" style="--i:1" id="f-2">
+        <header class="wc-top">
+          <p class="wc-who">E semper’a quis</p>
+          <h3>Sed sunt orci do curae consectetur</h3>
+          <p class="wc-lede">Curae veniam non veniam dolore sunt sunt sunt quis — vehicula qui nec aliquip, minim senectus.</p>
+        </header>
+        <div class="proofs">
+          <figure class="proof">
+            <div class="pf-h"><span>Veniam · habitant</span><span class="ex">Integer</span></div>
+            <div class="pf-b doc sm">
+              <ul>
+                <li><span class="chg">Sit hendrerit accumsan veniam 40,000 pariatur</span> non tristique occaecat ex gravida vestibulum curae velit.</li>
+                <li>Aliquip minim do <span class="gap-chip">[[EIUSMOD: non nec labore]]</span> egestas e posuere-anim adipiscing.</li>
+              </ul>
+              <div class="mini-stub"><span>↺ 2 laborum vehicula</span><span>Senectus: <b>eiusmod</b></span></div>
+              <span class="lock"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="10" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2"/></svg>Tempor SED</span>
+            </div>
+            <figcaption>Culpa e aute et eiusmod, ex veniam e scelerisque gravida ea ultricies non.</figcaption>
+          </figure>
+          <figure class="proof">
+            <div class="pf-h"><span>Nulla veniam · nulla</span><span class="ex">Integer</span></div>
+            <div class="pf-b note-sm">
+              <p>Qui eros donec E’id sit hendrerit non posuere accumsan in Imperdiet Suscipit — nec sunt quis sunt aliquip consequat qui mollit bibendum.</p>
+              <p>E’a fames nec tristique E integer id SIT non Cillum, non e lorem ea nostrud nullam ante ante ultricies e gravida nisi nec nec do.</p>
+            </div>
+            <figcaption>Aliquip irure sunt amet sed’id pharetra ante.</figcaption>
+          </figure>
+          <figure class="proof">
+            <div class="pf-h"><span>Consectetur · suscipit</span><span class="ex">Integer</span></div>
+            <div class="pf-b form sm">
+              <div class="fld"><label>Irure ante</label><div class="in"><span class="nm">Minim</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg></div></div>
+              <div class="fld"><label>Cubilia felis</label><div class="in"><span class="nm">Aliqua Officia</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg></div></div>
+              <div class="fld"><label>Veniam</label><div class="in"><span class="nm">minim-lacus-nulla.sed</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg></div></div>
+              <div class="fld left"><label>Qui ut sed esse ex quis in Nulla?</label><div class="in">Amet qui sed</div></div>
+              <div class="form-f"><span><b data-count="19">19</b> ea 21 dolore</span><span class="submit">Sed luctus</span></div>
+            </div>
+            <figcaption>Netus dolore sunt sunt ullamco. Sed dolore, sed luctus.</figcaption>
+          </figure>
+        </div>
+      </article>
+<article class="face" style="--i:2" id="f-3">
+        <header class="wc-top">
+          <p class="wc-who">E donec’a quis</p>
+          <h3>Sunt culpa ex sed</h3>
+          <p class="wc-lede">Labore nulla culpa sed felis, non lorem nulla amet ex ut ante.</p>
+        </header>
+        <div class="proofs two">
+          <figure class="proof">
+            <div class="pf-h"><span>Netus · integer accumsan pariatur</span><span class="ex">Integer</span></div>
+            <div class="pf-b">
+              <div class="score-big"><span class="pct" data-count="58">58%</span><span>Integer Accumsan Pariatur · Nullam (AD)</span></div>
+              <div class="meter"><span class="lbl">Mollit</span><span class="mbar"><i style="width:40%"></i></span><span class="val">2 ea 5 aute</span></div>
+              <div class="chips"><span class="have">Semper</span><span class="have">Adipiscing</span><span class="gap">Posuere — nec id sunt ullamco</span><span class="gap">Netus adipiscing — nec id sunt ullamco</span></div>
+              <p class="score-note">Sunt maecenas mollit nisi’a excepteur id sunt ullamco est. Tempor nec ullamco, nec nec semper, et amet lorem esse cillum.</p>
+            </div>
+            <figcaption>Consectetuer suscipit sed minim laborum — amet labore vestibulum.</figcaption>
+          </figure>
+          <figure class="proof">
+            <div class="pf-h"><span>Sunt esse</span><span class="ex">Integer</span></div>
+            <div class="pf-b plan-list">
+              <div class="pl done"><i></i><span>Non nec minim labore ex sunt Imperdiet mauris</span><em>Voluptate</em></div>
+              <div class="pl"><i></i><span>Aliqua sunt veniam qui Laboris Donec Fugiat</span><em>Voluptate</em></div>
+              <div class="pl"><i></i><span>Eiusmod sunt Proident bibendum</span><em>Sed velit</em></div>
+              <div class="pl"><i></i><span>Aute e netus sed’id nostrud, qui nec ET donec</span><em>Voluptate</em></div>
+              <p class="next-step"><b>Ante orci odio:</b> non nec minim labore — ex aliquip sunt veniam tempor.</p>
+            </div>
+            <figcaption>Sunt ante odio, netus — non duis ut donec sed nec quis anim ex.</figcaption>
+          </figure>
+        </div>
+      </article>
+<article class="face" style="--i:3" id="f-4">
+        <header class="wc-top">
+          <p class="wc-who">Nec semper cillum <span class="chip lt">Excepteur &amp; Posuere</span></p>
+          <h3>Nec aliquip, ante curae sed fames</h3>
+          <p class="wc-lede">Sunt egestas odio nec velit aliquip do sunt proident — excepteur, cubilia non cubilia occaecat — non pretium anim id curae proident.</p>
+        </header>
+        <div class="proofs">
+          <figure class="proof">
+            <div class="pf-h"><span>@maecenas · esse quisque</span><span class="ex">Integer</span></div>
+            <div class="pf-b activity">
+              <p><time>06:40</time>Est sunt morbi semper · Nec Quis ex nullam</p>
+              <p><time>06:41</time>212 egestas sunt laborum</p>
+              <p><time>06:52</time>Sint 40 id nisi laboris sunt ullamco</p>
+              <p><time>06:58</time><b>3 nostrud sunt 80% sit</b></p>
+              <p><time>07:00</time>Sunt Velit Turpis et nulla</p>
+            </div>
+            <figcaption>Odio sunt semper do sunt proident, non velit sed amet ex est.</figcaption>
+          </figure>
+          <figure class="proof">
+            <div class="pf-h"><span>Velit Turpis · Laboris</span><span class="ex">Integer</span></div>
+            <div class="pf-b row-mini">
+              <div class="row-item"><div><b>Aliqua Ante Officia</b><small>Laboris Donec Fugiat</small></div><span class="pct top" data-count="91">91%</span></div>
+              <div class="row-item"><div><b>Ultricies Amet</b><small>Nulla Hendrerit</small></div><span class="pct">86%</span></div>
+              <div class="row-item"><div><b>Aliqua Gravida Officia</b><small>Proident Accumsan</small></div><span class="pct">82%</span></div>
+              <div class="row-yn-item"><span class="y">✓ Eros</span><span>✗ Ante</span></div>
+            </div>
+            <figcaption>E curae sint in nec enim sed labore. Non-elit ✓ / ✗.</figcaption>
+          </figure>
+          <figure class="proof">
+            <div class="pf-h"><span>@vestibulum · lorem</span><span class="ex">Integer</span></div>
+            <div class="pf-b digest">
+              <b>Laboris Donec Fugiat</b>
+              <ul>
+                <li>Fugiat eros ultricies donec id nec sint 30 nisi</li>
+                <li>E sit UT ea Ante nullam id Labore</li>
+                <li>Efficitur nisi: SIT mauris, elit dolor, culpa</li>
+              </ul>
+              <small>Vestibulum · 6 egestas, dolor</small>
+            </div>
+            <figcaption>Vehicula varius do sunt dolore hendrerit — cubilia non dolor.</figcaption>
+          </figure>
+        </div>
+      </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tun-sec" id="why">
+  <div class="tun" id="tun">
+    <div class="wrap tun-head">
+      <h2 class="display h2">Qui Ac Irure <span class="accent">Esse</span></h2>
+      <p class="sub">Veniam varius turpis e labore minim. Sint’a amet minim curae elit.</p>
+      <p class="ro-d">Sunt luctus morbi sunt Turpis non Donec. Irure occaecat.</p>
+    </div>
+    <div class="tun-cards">
+      <figure class="tq"><blockquote>Semper ac do nec nostrud exercitation odio nisi nec voluptate.</blockquote><figcaption>Turpis · adipiscingelit · Qui 2026</figcaption></figure>
+      <figure class="tq lt"><blockquote>E ipsum do EX, curae nulla aliquip, nec “Esse Dolor”… non nisi eiusmod. Nec ante e hendrerit.</blockquote><figcaption>Turpis · adipiscingelit · Nec 2026</figcaption></figure>
+      <figure class="tq"><blockquote>Felis 2k+ exercitation, sed E anim felis sed felis, senectus ut felis adipiscing, senectus adipiscing, eros felis, non E ac VELIT EA ESSE. Esse sed nec cubilia do mollit.</blockquote><figcaption>Turpis · adipiscingelit · Sit 2025</figcaption></figure>
+      <figure class="tq"><blockquote>E sed ante sit id Nostrud. Suscipit do EX. E’id venenatis nulla 50 exercitation minim. Veniam E’id aute pretium. Mollit e luctus incididunt non tempor non efficitur. Non.</blockquote><figcaption>Turpis · duis · Nec 2026</figcaption></figure>
+      <figure class="tq lt"><blockquote>Do sed nisi’a dolor non e bibendum curae et ac tristique e lorem ipsum ante fugiat in ex</blockquote><figcaption>Donec · Sit 2023</figcaption></figure>
+      <figure class="tq"><blockquote>Ex semper sed ex aliqua adipiscing cubilia do sunt mollit elit odio ante enim. Hendrerit sit deserunt qui esse cubilia, non vestibulum sed nec amet minim posuere morbi pariatur odio ex.</blockquote><figcaption>Turpis · adipiscingelit · Sit 2025</figcaption></figure>
+      <figure class="tq"><blockquote>E ut nulla 15 e est, odio exercitation nulla aliquip non excepteur do mollit qui eros.</blockquote><figcaption>Turpis · adipiscingelit · Non 2025</figcaption></figure>
+      <figure class="tq lt"><blockquote>curae elit E amet ex E amet amet… varius. Nec labore occaecat sunt-efficitur, nec nullam “reprehenderit” morbi, nec consectetur — ex sed minim sint ex ut. In nec sunt elit, E sunt E anim ex dolor ipsum ex.</blockquote><figcaption>Turpis · proident · Non 2025</figcaption></figure>
+      <figure class="tq"><blockquote>Do Proident ullamco et tempor integer nec do adipiscing curae do vulputate’a ullamco incididunt nec integer nec, sed ac anim commodo vestibulum… Amet anim E ante irure non sed nec E ultrices do vestibulum ex maecenas non adipiscing?</blockquote><figcaption>Turpis · proident · Non 2025</figcaption></figure>
+      <figure class="tq"><blockquote>E’a 27, tincidunt vestibulum, non pariatur commodo elit E’id dolore luctus id aute. Laboris sed mollit laboris odio officia, reprehenderit, culpa... non E’a minim vestibulum nec laborum, egestas odio incididunt, ex amet nec officia amet ex ut ante.</blockquote><figcaption>Turpis · adipiscingelit · Non 2025</figcaption></figure>
+      <figure class="tq lt"><blockquote>E esse in nec deserunt non amet incididunt sint non adipiscingelit qui adipiscing enim sit’a officia ante-maecenas magna amet.</blockquote><figcaption>Turpis · malesuada · Sit 2025</figcaption></figure>
+      <figure class="tq"><blockquote>Id mollit e nullam veniam ex ut non nisi e veniam… Id luctus est elit qui ut. Minim eros ac… Qui id’a amet. Non E’a incididunt.</blockquote><figcaption>Turpis · adipiscingelit · Nec 2026</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="compare">
+  <div class="cmp3" id="cmp3">
+    <div class="wrap cmp3-head">
+      <p class="kicker">Amet enim esse ipsum</p>
+      <h2 class="display h2"><span class="accent">Lorem</span> et sunt labore egestas</h2>
+      <p class="sub">Amet reprehenderit enim eiusmod, integer non nulla senectus. In Lorem sed nec non egestas qui anim sed culpa — ex minim tristique lacus.</p>
+    </div>
+    <div class="labs">
+      <div class="lab"><small>Est eiusmod</small><b>Aliquip &amp; aliquip</b><span>$200–$500 sed veniam</span></div>
+      <div class="lab"><small>Labore integer</small><b>Pharetra</b><span>$100–$300/ex</span></div>
+      <div class="lab"><small>Nulla senectus</small><b>Proident &amp; nulla</b><span>$1,000–$5,000/ex</span></div>
+    </div>
+    <div class="one3">
+      <span class="who"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2" y="3" width="20" height="18" rx="2" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/></svg>Lorem</span>
+      <span class="cost">Esse — ex $19+</span>
+      <p class="line">Non egestas, nec quis ea sed culpa — in e pharetra ea nec enim.</p>
+    </div>
+  </div>
+  <div class="wrap cmp3-table">
+<div class="cmp-scroll">
+      <table class="cmp">
+        <thead><tr><th scope="col"><span class="sr-only">Egestas</span></th><th scope="col">Est eiusmod</th><th scope="col">Labore integer</th><th scope="col">Nulla senectus</th><th scope="col" class="d">Lorem</th></tr></thead>
+        <tbody>
+          <tr class="cost-r"><th scope="row">Minim</th><td>$200–$500 sed veniam</td><td>$100–$300/ex</td><td>$1,000–$5,000/ex</td><td class="d">Esse — ex $19+</td></tr>
+          <tr><th scope="row">Veniam egestas</th><td><span class="ic y"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>1–3 hendrerit</span></td><td>Eiusmod pharetra</td><td><span class="ic y"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Ultrices</span></td><td class="d"><span class="ic y"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Curae nulla &amp; accumsan</span></td></tr>
+          <tr><th scope="row">Mollit enim ex dolor</th><td>Semper</td><td><span class="ic n"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg><span class="sr-only">Nec ultrices</span></span></td><td>Semper</td><td class="d"><span class="ic y"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Eros enim ex sed dolor</span></td></tr>
+          <tr><th scope="row">Nulla aliquip</th><td>Velit $50–$150</td><td>NEC odio sint</td><td><span class="ic y"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Ultrices</span></td><td class="d"><span class="ic y"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Curae nulla &amp; accumsan</span></td></tr>
+          <tr><th scope="row">Proident consectetuer</th><td>Velit enim</td><td>Venenatis</td><td><span class="ic y"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Ultrices</span></td><td class="d"><span class="ic y"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Ultrices</span></td></tr>
+          <tr><th scope="row">Ultrices ultrices</th><td><span class="ic n"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg><span class="sr-only">Nec ultrices</span></span></td><td>Odio pharetra</td><td><span class="ic y"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Anim egestas</span></td><td class="d"><span class="ic y"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Ultrices</span></td></tr>
+          <tr><th scope="row">Nec semper incididunt</th><td><span class="ic n"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg><span class="sr-only">Nec ultrices</span></span></td><td><span class="ic n"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg><span class="sr-only">Nec ultrices</span></span></td><td><span class="ic n"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg><span class="sr-only">Nec ultrices</span></span></td><td class="d"><span class="ic y"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Qui-ex-qui</span></td></tr>
+          <tr><th scope="row">Vestibulum</th><td>3–7 nisi</td><td>Do ullamcorper</td><td>2–4 minim</td><td class="d">Quisque</td></tr>
+          <tr><th scope="row">24/7 exercitation</th><td><span class="ic n"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg><span class="sr-only">Nec ultrices</span></span></td><td><span class="ic n"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg><span class="sr-only">Nec ultrices</span></span></td><td><span class="ic n"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg><span class="sr-only">Nec ultrices</span></span></td><td class="d"><span class="ic y"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Luctus do</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="cmp-foot"><a class="btn btn-line" href="#pricing">Eros Posuere →</a></div>
+  </div>
+</section>
+
+<section class="sec3" id="pricing">
+  <div class="wrap">
+<div class="sec-head">
+      <p class="kicker">Posuere</p>
+      <h2 class="display h2">Dolor esse. Egestas nisi do sed esse eros.</h2>
+      <p class="sub">Sunt egestas odio do EX veniam. Nec esse esse aliqua curae velit; nec anim amet sed sed enim non magna in sunt odio. Ac pellentesque, eiusmod ex tempor.</p>
+    </div>
+    <div class="plans">
+      <div class="plan">
+        <div class="plan-top"><span class="plan-name">Habitant</span><span class="badge free">Esse ullamco</span></div>
+        <div class="plan-price"><b>Esse</b><span>minim nostrud</span></div>
+        <p class="desc">Curae sunt — sit ex qui sunt</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Sed magna, mollit non vestibulum</li>
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>10k veniam/velit, 1k e est</li>
+          <li class="x"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg>Ac Velit Turpis</li>
+        </ul>
+        <p class="note">Ac eros, ac eiusmod, eiusmod ex tempor.</p>
+        <a class="btn btn-primary" href="#">Nec Gravida Esse</a>
+      </div>
+      <div class="plan hl">
+        <div class="plan-top"><span class="plan-name">Excepteur</span><span class="badge">Dolor sint</span></div>
+        <div class="plan-price"><b>$19</b><span>non elit · 30 nisi ex magna ex</span></div>
+        <p class="desc">50k veniam, e velit in e elit</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Adipiscing id Habitant</li>
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>50k veniam, 30 nisi</li>
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Sunt Velit Turpis, irure excepteur</li>
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Ac velit netus — magna in sunt odio</li>
+        </ul>
+        <p class="note">Sit enim. Ac pellentesque, eiusmod ex tempor.</p>
+        <a class="btn btn-ghost" href="#">Nec Excepteur</a>
+      </div>
+      <div class="plan">
+        <div class="plan-top"><span class="plan-name">Posuere</span><span class="badge">Orci sint</span></div>
+        <div class="plan-price"><b>$49</b><span>non elit · lorem sint ex 12 veniam</span></div>
+        <p class="desc">Sed enim, magna in sunt sed odio</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Adipiscing id Excepteur</li>
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>1k veniam, 12 veniam</li>
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Ac velit netus ex lacus</li>
+          <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg>Sed eros amet sed non’a non</li>
+        </ul>
+        <p class="note">Sit enim. Ac pellentesque, eiusmod ex tempor.</p>
+        <a class="btn btn-ghost" href="#">Nec Posuere</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec3 partner3" id="partners">
+  <div class="wrap partner">
+    <div>
+      <p class="kicker">Qui integer, eiusmod non nulla senectus</p>
+      <h2 class="display">Sed sed e labore donec, mollit semper, ex nulla egestas?</h2>
+      <p>Quis odio ad ex sed labore aliquip turpis netus ea curae pellentesque — non velit eros nostrud ante sunt accumsan magna. Lorem et nec luctus curae sunt pharetra, nec e condimentum qui ex.</p>
+    </div>
+    <div>
+      <a class="btn btn-line btn-xl" href="#">Commodo odio ad
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="close close3" data-f="markClose" id="close">
+  <div class="wrap close-in">
+    <div>
+      <h2 class="display" id="closeTitle">Sunt labore egestas et nulla.<span class="cursor" aria-hidden="true"></span></h2>
+      <p>Dolor esse odio 5 gravida EX veniam curae velit — non sunt eros ante 10,000 incididunt reprehenderit.</p>
+      <p class="micro">Ac veniam eros · Nec esse 5 gravida aliqua curae velit · Egestas nisi do sed esse eros</p>
+    </div>
+    <a class="btn btn-primary btn-xl" href="#">Nec Gravida Esse
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg>
+    </a>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="#top" aria-label="Lorem, anim ex nec">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2" y="3" width="20" height="18" rx="2" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Lorem</span>
+    </a>
+    <nav aria-label="Labore">
+      <a href="#">Nulla</a>
+      <a href="#">Posuere</a>
+      <a href="#">Esse</a>
+      <a href="#">Gravida</a>
+      <a href="#">Lacus</a>
+    </nav>
+    <span>© 2026 Lorem, Tempor NON</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  if (!root.classList.contains('fx')) return;
+  if (!window.gsap || !window.ScrollTrigger) {
+    root.classList.remove('fx');
+    return;
+  }
+  function layout() {
+    var W = window.innerWidth,
+      H = window.innerHeight,
+      M = W < 760;
+    return {
+      W: W,
+      H: H,
+      M: M,
+      cloud: M ? {
+        x: 0,
+        y: H * .22,
+        R: W * .62
+      } : {
+        x: W * .22,
+        y: 0,
+        R: Math.min(W * .34, H * .62)
+      },
+      meet: M ? {
+        x: 0,
+        y: H * .3,
+        S: W * .4
+      } : {
+        x: W * .22,
+        y: 0,
+        S: Math.min(W * .28, H * .46)
+      },
+      big: M ? {
+        x: 0,
+        y: H * .2,
+        w: W * .9,
+        h: H * .17
+      } : {
+        x: 0,
+        y: H * .14,
+        w: W * .74,
+        h: H * .32
+      },
+      three: {
+        xs: [-W * .3, 0, W * .3],
+        y: M ? -H * .02 : H * .02,
+        r: M ? W * .075 : Math.min(W, H) * .085
+      },
+      one: M ? {
+        x: 0,
+        y: 0,
+        S: W * .34
+      } : {
+        x: 0,
+        y: H * .01,
+        S: Math.min(W * .2, H * .27)
+      },
+      close: M ? {
+        x: 0,
+        y: H * .26,
+        S: W * .36
+      } : {
+        x: 0,
+        y: H * .2,
+        S: Math.min(W * .16, H * .26)
+      }
+    };
+  }
+  var FIT = [34, 52, 61, 47, 72, 28, 91, 55, 66, 43, 38, 70, 59, 49, 77, 31, 64, 58, 45, 86, 53, 68, 41, 74, 36, 62, 57, 48, 69, 33, 82, 51, 63, 44, 75, 39, 56, 67, 42, 60];
+  var GREY = [.56, .6, .67],
+    BLUE = [.38, .65, .98],
+    SOFT = [.58, .77, .99],
+    WHITE = [.93, .94, .97],
+    GREEN = [.29, .87, .5];
+  function Signal(canvas) {
+    var gl = null;
+    try {
+      gl = canvas.getContext('webgl', {
+        antialias: false,
+        depth: false,
+        alpha: true,
+        premultipliedAlpha: true
+      });
+    } catch (e) {}
+    if (!gl) return null;
+    var VS = 'attribute vec3 a_pos;attribute vec4 a_col;attribute float a_size;uniform vec3 u_cam;uniform mat4 u_proj;uniform float u_pd;varying vec4 v_col;' + 'void main(){vec4 p=u_proj*vec4(a_pos-u_cam,1.0);gl_Position=p;gl_PointSize=max(1.0,a_size*u_pd/max(p.w,1.0));v_col=a_col;}';
+    var FS = 'precision mediump float;varying vec4 v_col;void main(){gl_FragColor=v_col;}';
+    function sh(t, src) {
+      var s = gl.createShader(t);
+      gl.shaderSource(s, src);
+      gl.compileShader(s);
+      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s));
+      return s;
+    }
+    var prog = gl.createProgram();
+    gl.attachShader(prog, sh(gl.VERTEX_SHADER, VS));
+    gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FS));
+    gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) throw new Error('link');
+    gl.useProgram(prog);
+    var aPos = gl.getAttribLocation(prog, 'a_pos'),
+      aCol = gl.getAttribLocation(prog, 'a_col'),
+      aSize = gl.getAttribLocation(prog, 'a_size');
+    var uCam = gl.getUniformLocation(prog, 'u_cam'),
+      uProj = gl.getUniformLocation(prog, 'u_proj'),
+      uPd = gl.getUniformLocation(prog, 'u_pd');
+    var bP = gl.createBuffer(),
+      bC = gl.createBuffer(),
+      bS = gl.createBuffer();
+    gl.disable(gl.DEPTH_TEST);
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.ONE, gl.ONE);
+    gl.clearColor(0, 0, 0, 0);
+    var N = 0,
+      P,
+      C,
+      S,
+      DL,
+      SW,
+      NX,
+      NY,
+      NZ,
+      OM,
+      PH,
+      F = {},
+      W = 0,
+      H = 0,
+      M = false,
+      dpr = 1,
+      D = 900,
+      cloudB = null;
+    var stops = [],
+      cardRect = null,
+      closeSpec = null,
+      camX = 0,
+      camY = 0,
+      mx = 0,
+      my = 0;
+    function alloc(n) {
+      N = n;
+      P = new Float32Array(N * 3);
+      C = new Float32Array(N * 4);
+      S = new Float32Array(N);
+      DL = new Float32Array(N);
+      SW = new Float32Array(N);
+      NX = new Float32Array(N);
+      NY = new Float32Array(N);
+      NZ = new Float32Array(N);
+      OM = new Float32Array(N);
+      PH = new Float32Array(N);
+      for (var i = 0; i < N; i++) {
+        DL[i] = Math.random();
+        SW[i] = 20 + Math.random() * 90;
+        var u = Math.random() * 2 - 1,
+          th = Math.random() * Math.PI * 2,
+          r = Math.sqrt(1 - u * u);
+        NX[i] = r * Math.cos(th);
+        NY[i] = r * Math.sin(th);
+        NZ[i] = u;
+        OM[i] = .6 + Math.random();
+        PH[i] = Math.random() * 6.283;
+      }
+      gl.bindBuffer(gl.ARRAY_BUFFER, bP);
+      gl.bufferData(gl.ARRAY_BUFFER, P.byteLength, gl.DYNAMIC_DRAW);
+      gl.vertexAttribPointer(aPos, 3, gl.FLOAT, false, 0, 0);
+      gl.enableVertexAttribArray(aPos);
+      gl.bindBuffer(gl.ARRAY_BUFFER, bC);
+      gl.bufferData(gl.ARRAY_BUFFER, C.byteLength, gl.DYNAMIC_DRAW);
+      gl.vertexAttribPointer(aCol, 4, gl.FLOAT, false, 0, 0);
+      gl.enableVertexAttribArray(aCol);
+      gl.bindBuffer(gl.ARRAY_BUFFER, bS);
+      gl.bufferData(gl.ARRAY_BUFFER, S.byteLength, gl.DYNAMIC_DRAW);
+      gl.vertexAttribPointer(aSize, 1, gl.FLOAT, false, 0, 0);
+      gl.enableVertexAttribArray(aSize);
+    }
+    function fm() {
+      return {
+        p: new Float32Array(N * 3),
+        c: new Float32Array(N * 4),
+        s: new Float32Array(N),
+        fl: null
+      };
+    }
+    function put(f, i, x, y, z, col, a, sz) {
+      var i3 = i * 3,
+        i4 = i * 4;
+      f.p[i3] = x;
+      f.p[i3 + 1] = y;
+      f.p[i3 + 2] = z;
+      f.c[i4] = col[0];
+      f.c[i4 + 1] = col[1];
+      f.c[i4 + 2] = col[2];
+      f.c[i4 + 3] = a;
+      f.s[i] = sz;
+    }
+    function setc(f, i, col, a) {
+      var i4 = i * 4;
+      f.c[i4] = col[0];
+      f.c[i4 + 1] = col[1];
+      f.c[i4 + 2] = col[2];
+      f.c[i4 + 3] = a;
+    }
+    function dust(f, i, a) {
+      put(f, i, (Math.random() - .5) * W * 1.6, (Math.random() - .5) * H * 1.6, -200 - Math.random() * 1400, GREY, a == null ? .1 + Math.random() * .14 : a, 1.6);
+    }
+    function fillDust(f, from, a) {
+      for (var i = from; i < N; i++) dust(f, i, a);
+    }
+    function shuffle(pts) {
+      for (var i = pts.length / 2 - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1)),
+          ax = pts[i * 2],
+          ay = pts[i * 2 + 1];
+        pts[i * 2] = pts[j * 2];
+        pts[i * 2 + 1] = pts[j * 2 + 1];
+        pts[j * 2] = ax;
+        pts[j * 2 + 1] = ay;
+      }
+      return pts;
+    }
+    function sample(c, target) {
+      var d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data,
+        cnt = 0,
+        x,
+        y;
+      for (y = 0; y < c.height; y += 2) for (x = 0; x < c.width; x += 2) if (d[(y * c.width + x) * 4 + 3] > 128) cnt++;
+      var st = Math.max(2, Math.round(2 * Math.sqrt(cnt / target))),
+        pts = [];
+      for (y = 0; y < c.height; y += st) for (x = 0; x < c.width; x += st) if (d[(y * c.width + x) * 4 + 3] > 128) pts.push(x, y);
+      return shuffle(pts);
+    }
+    function cloudF(L) {
+      var f = fm(),
+        R = L.cloud.R;
+      cloudB = new Float32Array(N * 3);
+      for (var i = 0; i < N; i++) {
+        var r = Math.pow(Math.random(), .62) * R,
+          ang = i % 3 * 2.0944 + r / R * 4.4 + (Math.random() - .5) * .9;
+        cloudB[i * 3] = Math.cos(ang) * r;
+        cloudB[i * 3 + 1] = (Math.random() - .5) * R * .09 * (1.25 - r / R);
+        cloudB[i * 3 + 2] = Math.sin(ang) * r;
+        var hot = Math.random() < .05;
+        put(f, i, 0, 0, 0, hot ? SOFT : GREY, hot ? .9 : .2 + Math.random() * .45, hot ? 2.6 : 1.3 + Math.random() * 1.2);
+      }
+      f.cx = L.cloud.x;
+      f.cy = L.cloud.y;
+      return f;
+    }
+    function cloudUpdate(t) {
+      var f = F.cloud,
+        th = t * .05,
+        c = Math.cos(th),
+        s = Math.sin(th),
+        cp = Math.cos(-1.1),
+        sp = Math.sin(-1.1);
+      for (var i = 0; i < N; i++) {
+        var x = cloudB[i * 3],
+          y = cloudB[i * 3 + 1],
+          z = cloudB[i * 3 + 2],
+          x1 = x * c + z * s,
+          z1 = -x * s + z * c;
+        f.p[i * 3] = x1 + f.cx;
+        f.p[i * 3 + 1] = y * cp - z1 * sp + f.cy;
+        f.p[i * 3 + 2] = y * sp + z1 * cp - 120;
+      }
+    }
+    function gridF(L) {
+      var f = fm(),
+        x0 = -W * .46,
+        x1 = W * .46,
+        yt = M ? H * .46 : H * .37,
+        yb = M ? -H * .1 : -H * .37,
+        sx = M ? 4.4 : 5.2;
+      var perRow = (x1 - x0) / sx * .74,
+        gy = Math.max(M ? 9 : 11, (yt - yb) / (N / perRow)),
+        i = 0,
+        idx = [];
+      for (var y = yt; y > yb && i < N; y -= gy) {
+        var x = x0 + Math.random() * sx * 6;
+        while (x < x1 && i < N) {
+          var len = 6 + Math.floor(Math.random() * 22);
+          for (var k = 0; k < len && x < x1 && i < N; k++) {
+            put(f, i, x, y, 0, GREY, .36, 1.7);
+            idx.push(i);
+            i++;
+            x += sx;
+          }
+          x += sx * (3 + Math.random() * 5);
+        }
+      }
+      fillDust(f, i);
+      f.idx = idx;
+      return f;
+    }
+    function matchedF(g) {
+      var f = fm();
+      f.p.set(g.p);
+      f.c.set(g.c);
+      f.s.set(g.s);
+      var pick = {},
+        n = 0,
+        pool = g.idx;
+      while (n < Math.min(212, pool.length)) {
+        var k = pool[Math.floor(Math.random() * pool.length)];
+        if (!pick[k]) {
+          pick[k] = 1;
+          n++;
+        }
+      }
+      for (var j = 0; j < pool.length; j++) {
+        var i = pool[j];
+        if (pick[i]) {
+          f.p[i * 3 + 2] = 150;
+          setc(f, i, BLUE, 1);
+          f.s[i] = 3.4;
+        } else {
+          f.p[i * 3 + 2] = -160;
+          setc(f, i, GREY, .1);
+          f.s[i] = 1.5;
+        }
+      }
+      return f;
+    }
+    function chartF() {
+      var f = fm(),
+        cx = M ? 0 : W * .2,
+        cy = M ? H * .2 : 0,
+        CW = M ? W * .88 : Math.min(W * .52, 760),
+        CH = M ? H * .26 : Math.min(H * .46, 360);
+      var sp = CW / 40,
+        base = cy - CH / 2,
+        st = M ? 4 : 5,
+        i = 0,
+        x,
+        k;
+      for (var b = 0; b < 40 && i < N; b++) {
+        var v = FIT[b],
+          h = v / 100 * CH,
+          hi = v >= 80;
+        x = cx - CW / 2 + (b + .5) * sp;
+        for (var y = 0; y <= h && i < N; y += st) for (var cI = -1; cI <= 1 && i < N; cI += 2) put(f, i++, x + cI * sp * .16, base + y, 0, hi ? BLUE : GREY, hi ? 1 : .5, hi ? 2.6 : 2);
+      }
+      var y80 = base + .8 * CH;
+      for (x = cx - CW / 2 - 12, k = 0; x <= cx + CW / 2 + 12 && i < N; x += 7, k++) if (k % 3 !== 2) put(f, i++, x, y80, 6, SOFT, .8, 1.7);
+      for (x = cx - CW / 2 - 12; x <= cx + CW / 2 + 12 && i < N; x += 6) put(f, i++, x, base - 5, 0, GREY, .28, 1.4);
+      fillDust(f, i);
+      return f;
+    }
+    function cardsF() {
+      var f = fm(),
+        i = 0;
+      if (cardRect) [10, 20].forEach(function (inf, ring) {
+        var r = cardRect,
+          x0 = r.x - r.w / 2 - inf,
+          x1 = r.x + r.w / 2 + inf,
+          y0 = r.y - r.h / 2 - inf,
+          y1 = r.y + r.h / 2 + inf,
+          st = ring ? 7 : 4,
+          a = ring ? .35 : .9,
+          col = ring ? SOFT : WHITE,
+          x,
+          y;
+        for (x = x0; x <= x1 && i < N; x += st) {
+          put(f, i++, x, y0, 0, col, a, 2);
+          if (i < N) put(f, i++, x, y1, 0, col, a, 2);
+        }
+        for (y = y0; y <= y1 && i < N; y += st) {
+          put(f, i++, x0, y, 0, col, a, 2);
+          if (i < N) put(f, i++, x1, y, 0, col, a, 2);
+        }
+      });
+      fillDust(f, i);
+      return f;
+    }
+    function markF(cx, cy, S) {
+      var f = fm();
+      f.fl = new Uint8Array(N);
+      var c = document.createElement('canvas');
+      c.width = c.height = Math.max(8, Math.ceil(S));
+      var ctx = c.getContext('2d'),
+        k = S / 24;
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 2.1 * k;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.strokeRect(2 * k, 3 * k, 20 * k, 18 * k);
+      ctx.beginPath();
+      ctx.arc(12 * k, 12 * k, 4 * k, 0, Math.PI * 2);
+      ctx.stroke();
+      var pts = sample(c, N * .75),
+        n = Math.min(N, pts.length / 2),
+        i = 0;
+      for (; i < n; i++) {
+        var px = pts[i * 2],
+          py = pts[i * 2 + 1],
+          und = py > 15.6 * k && py < 18.8 * k && px > 12 * k && px < 18 * k;
+        put(f, i, cx + px - S / 2, cy - (py - S / 2), (Math.random() - .5) * 8, WHITE, und ? .95 : .8, 2.2);
+        if (und) f.fl[i] = 1;
+      }
+      fillDust(f, i);
+      return f;
+    }
+    function textF(str, cx, cy, maxW, maxH, col) {
+      var f = fm(),
+        fam = function (px) {
+          return '800 ' + px.toFixed(1) + 'px Archivo, "Arial Narrow", sans-serif';
+        };
+      var c = document.createElement('canvas'),
+        ctx = c.getContext('2d');
+      ctx.font = fam(200);
+      try {
+        ctx.fontStretch = 'condensed';
+      } catch (e) {}
+      var w = ctx.measureText(str).width,
+        fs = Math.min(maxH, 200 * maxW / w);
+      c.width = Math.ceil(w * fs / 200) + 24;
+      c.height = Math.ceil(fs * 1.15) + 24;
+      ctx = c.getContext('2d');
+      ctx.font = fam(fs);
+      try {
+        ctx.fontStretch = 'condensed';
+      } catch (e) {}
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = '#fff';
+      ctx.fillText(str, 12, c.height / 2);
+      var pts = sample(c, N * .8),
+        n = Math.min(N, pts.length / 2),
+        i = 0;
+      for (; i < n; i++) put(f, i, cx + pts[i * 2] - c.width / 2 + (Math.random() - .5) * 1.5, cy - (pts[i * 2 + 1] - c.height / 2) + (Math.random() - .5) * 1.5, (Math.random() - .5) * 10, col, .85, 2.3);
+      fillDust(f, i);
+      return f;
+    }
+    function threeF(L) {
+      var f = fm(),
+        i = 0,
+        per = Math.floor(N * .2);
+      L.three.xs.forEach(function (cx) {
+        for (var k = 0; k < per; k++) {
+          var th = Math.random() * 6.283,
+            ph = Math.acos(2 * Math.random() - 1),
+            r = L.three.r * Math.cbrt(Math.random());
+          put(f, i++, cx + r * Math.sin(ph) * Math.cos(th), L.three.y + r * Math.cos(ph), r * Math.sin(ph) * Math.sin(th), GREY, .62, 2);
+        }
+      });
+      fillDust(f, i);
+      return f;
+    }
+    function aloneF() {
+      var f = fm();
+      for (var i = 0; i < N; i++) {
+        if (i % 60 === 0) put(f, i, (Math.random() - .5) * W * 1.1, (Math.random() - .5) * H, -100 - Math.random() * 500, GREY, .55, 2.2);else dust(f, i, .05);
+      }
+      return f;
+    }
+    function dustF() {
+      var f = fm();
+      fillDust(f, 0);
+      return f;
+    }
+    function build() {
+      var L = layout();
+      F.cloud = cloudF(L);
+      F.grid = gridF(L);
+      F.matched = matchedF(F.grid);
+      F.chart = chartF();
+      F.cards = cardsF();
+      F.markMeet = markF(L.meet.x, L.meet.y, L.meet.S);
+      F.k10 = textF('$10,000+', L.big.x, L.big.y, L.big.w, L.big.h, WHITE);
+      F.free = textF('Lorem', L.big.x, L.big.y, L.big.w, L.big.h, GREEN);
+      F.dust = dustF();
+      F.alone = aloneF();
+      F.three = threeF(L);
+      F.one = markF(L.one.x, L.one.y, L.one.S);
+      var cs = closeSpec || L.close;
+      F.markClose = markF(cs.x, cs.y, cs.S);
+    }
+    function resize() {
+      W = window.innerWidth;
+      H = window.innerHeight;
+      M = W < 760;
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var n = M ? 2600 : 5200;
+      if (n !== N) alloc(n);
+      canvas.width = Math.round(W * dpr);
+      canvas.height = Math.round(H * dpr);
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      var f = D / (H / 2),
+        near = 10,
+        far = 6000;
+      gl.uniformMatrix4fv(uProj, false, new Float32Array([f / (W / H), 0, 0, 0, 0, f, 0, 0, 0, 0, (far + near) / (near - far), -1, 0, 0, 2 * far * near / (near - far), 0]));
+      gl.uniform1f(uPd, dpr * D);
+      build();
+    }
+    function frame(now) {
+      requestAnimationFrame(frame);
+      if (stops.length < 2 || !F.dust) return;
+      var t = now / 1000,
+        y = window.scrollY,
+        n = stops.length,
+        k = 0;
+      while (k < n - 2 && y >= stops[k + 1].y) k++;
+      var s0 = stops[k],
+        s1 = stops[k + 1],
+        p = (y - s0.y) / Math.max(1, s1.y - s0.y);
+      p = p < 0 ? 0 : p > 1 ? 1 : p;
+      p = (p - .12) / .76;
+      p = p < 0 ? 0 : p > 1 ? 1 : p;
+      var A = F[s0.f] || F.dust,
+        B = F[s1.f] || F.dust;
+      var tail = y > stops[n - 1].y ? y - stops[n - 1].y : 0;
+      if (A === F.cloud || B === F.cloud) cloudUpdate(t);
+      var blink = t % 1.1 < .6 ? 1 : .1;
+      var gridW = (A === F.grid ? 1 - p : 0) + (B === F.grid ? p : 0),
+        scanX = t * 300 % (W * 1.4) - W * .7;
+      camX += (mx * 16 - camX) * .05;
+      camY += (-my * 10 - camY) * .05;
+      var swAmp = A === B ? 0 : 1,
+        Ap = A.p,
+        Bp = B.p,
+        Ac = A.c,
+        Bc = B.c,
+        As = A.s,
+        Bs = B.s,
+        Af = A.fl,
+        Bf = B.fl;
+      for (var i = 0; i < N; i++) {
+        var q = (p - DL[i] * .3) / .7;
+        q = q < 0 ? 0 : q > 1 ? 1 : q;
+        q = q * q * (3 - 2 * q);
+        var i3 = i * 3,
+          i4 = i * 4,
+          sw = Math.sin(q * 3.14159) * SW[i] * swAmp;
+        var px = Ap[i3] + (Bp[i3] - Ap[i3]) * q + NX[i] * sw;
+        P[i3] = px;
+        P[i3 + 1] = Ap[i3 + 1] + (Bp[i3 + 1] - Ap[i3 + 1]) * q + NY[i] * sw + Math.sin(t * OM[i] + PH[i]) * 1.2 + tail;
+        P[i3 + 2] = Ap[i3 + 2] + (Bp[i3 + 2] - Ap[i3 + 2]) * q + NZ[i] * sw;
+        var a = Ac[i4 + 3] + (Bc[i4 + 3] - Ac[i4 + 3]) * q;
+        if (Af && Af[i]) a *= 1 - (1 - blink) * (1 - q);
+        if (Bf && Bf[i]) a *= 1 - (1 - blink) * q;
+        if (gridW > .01 && a > .2) {
+          var dx = (px - scanX) / 40;
+          a += gridW * .45 * Math.exp(-dx * dx);
+        }
+        a *= .86 + .14 * Math.sin(t * OM[i] * 1.9 + PH[i]);
+        if (a > 1) a = 1;
+        C[i4] = (Ac[i4] + (Bc[i4] - Ac[i4]) * q) * a;
+        C[i4 + 1] = (Ac[i4 + 1] + (Bc[i4 + 1] - Ac[i4 + 1]) * q) * a;
+        C[i4 + 2] = (Ac[i4 + 2] + (Bc[i4 + 2] - Ac[i4 + 2]) * q) * a;
+        C[i4 + 3] = a;
+        S[i] = As[i] + (Bs[i] - As[i]) * q;
+      }
+      gl.uniform3f(uCam, camX, camY, D);
+      gl.bindBuffer(gl.ARRAY_BUFFER, bP);
+      gl.bufferSubData(gl.ARRAY_BUFFER, 0, P);
+      gl.bindBuffer(gl.ARRAY_BUFFER, bC);
+      gl.bufferSubData(gl.ARRAY_BUFFER, 0, C);
+      gl.bindBuffer(gl.ARRAY_BUFFER, bS);
+      gl.bufferSubData(gl.ARRAY_BUFFER, 0, S);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.drawArrays(gl.POINTS, 0, N);
+    }
+    window.addEventListener('pointermove', function (e) {
+      mx = (e.clientX / W - .5) * 2;
+      my = (e.clientY / H - .5) * 2;
+    });
+    resize();
+    requestAnimationFrame(frame);
+    return {
+      resize: resize,
+      rebuild: build,
+      setStops: function (s) {
+        stops = s;
+      },
+      setCardRect: function (r) {
+        cardRect = r;
+        if (N) F.cards = cardsF();
+      },
+      setCloseMark: function (c) {
+        closeSpec = c;
+        if (N) F.markClose = markF(c.x, c.y, c.S);
+      }
+    };
+  }
+  try {
+    gsap.registerPlugin(ScrollTrigger);
+    ScrollTrigger.config({
+      ignoreMobileResize: true
+    });
+    var lenis = null;
+    if (window.Lenis) {
+      lenis = new Lenis({
+        lerp: 0.1,
+        smoothWheel: true
+      });
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add(function (t) {
+        lenis.raf(t * 1000);
+      });
+      gsap.ticker.lagSmoothing(0);
+    }
+    function scrollToY(y) {
+      if (lenis) lenis.scrollTo(y, {
+        duration: 1.4
+      });else window.scrollTo({
+        top: y,
+        behavior: 'smooth'
+      });
+    }
+    document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var id = a.getAttribute('href'),
+          el = id === '#top' ? 0 : document.querySelector(id);
+        if (el === null) return;
+        e.preventDefault();
+        if (lenis) lenis.scrollTo(el, {
+          offset: el === 0 ? 0 : -70,
+          duration: 1.6
+        });else window.scrollTo({
+          top: el === 0 ? 0 : el.getBoundingClientRect().top + window.scrollY - 70,
+          behavior: 'smooth'
+        });
+      });
+    });
+    var hud = document.getElementById('hud'),
+      prog = document.getElementById('hudProgress');
+    ScrollTrigger.create({
+      start: 0,
+      end: 'max',
+      onUpdate: function (s) {
+        prog.style.transform = 'scaleX(' + s.progress.toFixed(4) + ')';
+        hud.classList.toggle('past', s.scroll() > window.innerHeight * .55);
+      }
+    });
+    gsap.utils.toArray('.readout, .panel, #readyCard').forEach(function (el) {
+      gsap.fromTo(el, {
+        y: 36,
+        opacity: 0
+      }, {
+        y: 0,
+        opacity: 1,
+        duration: .8,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 90%',
+          toggleActions: 'play none none reverse'
+        }
+      });
+    });
+    var prismSec = document.getElementById('work'),
+      prism = document.getElementById('prism');
+    var faces = [].slice.call(prism.children),
+      steps = [].slice.call(document.querySelectorAll('.pr-step'));
+    var prismST = null,
+      R = {
+        rx: 0
+      };
+    function measurePrism() {
+      prism.classList.add('measure');
+      var h = 0;
+      faces.forEach(function (f) {
+        h = Math.max(h, f.offsetHeight);
+      });
+      prism.classList.remove('measure');
+      var k = Math.min(1, (window.innerHeight - 110) / h),
+        stage = prism.parentNode;
+      prism.style.setProperty('--h', h + 'px');
+      stage.style.transformOrigin = '50% 50%';
+      stage.style.transform = k < 1 ? 'scale(' + k.toFixed(4) + ')' : '';
+    }
+    function applyPrism() {
+      prism.style.setProperty('--rx', R.rx.toFixed(2));
+      faces.forEach(function (f, i) {
+        f.style.setProperty('--shade', (Math.min(1, Math.abs(R.rx - 90 * i) / 90) * .6).toFixed(3));
+      });
+      var on = Math.round(R.rx / 90);
+      steps.forEach(function (s, i) {
+        s.classList.toggle('on', i === on);
+      });
+    }
+    var mm = gsap.matchMedia();
+    mm.add('(min-width: 1000px) and (min-height: 680px)', function () {
+      measurePrism();
+      var tl = gsap.timeline({
+        defaults: {
+          ease: 'power2.inOut'
+        },
+        onUpdate: applyPrism,
+        scrollTrigger: {
+          trigger: prismSec,
+          start: 'top top',
+          end: '+=320%',
+          pin: true,
+          scrub: .6,
+          refreshPriority: 3,
+          anticipatePin: 1
+        }
+      });
+      tl.to(R, {
+        rx: 90,
+        duration: .8
+      }, .6).to(R, {
+        rx: 180,
+        duration: .8
+      }, 2).to(R, {
+        rx: 270,
+        duration: .8
+      }, 3.4).to({}, {
+        duration: .6
+      }, 4.2);
+      prismST = tl.scrollTrigger;
+      applyPrism();
+      ScrollTrigger.addEventListener('refreshInit', measurePrism);
+      return function () {
+        ScrollTrigger.removeEventListener('refreshInit', measurePrism);
+        prismST = null;
+        R.rx = 0;
+        prism.style.removeProperty('--rx');
+        prism.style.removeProperty('--h');
+        prism.parentNode.style.transform = '';
+        faces.forEach(function (f) {
+          f.style.removeProperty('--shade');
+        });
+      };
+    });
+    steps.forEach(function (s, i) {
+      s.addEventListener('click', function () {
+        if (!prismST) {
+          faces[i].scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+          return;
+        }
+        scrollToY(prismST.start + [.3, 1.7, 3.1, 4.5][i] / 4.8 * (prismST.end - prismST.start));
+      });
+    });
+    var tun = document.getElementById('tun'),
+      tq = [].slice.call(tun.querySelectorAll('.tq')),
+      K = tq.length;
+    var jit = tq.map(function () {
+      return {
+        x: Math.random() - .5,
+        y: Math.random() - .5
+      };
+    });
+    function placeTunnel(p) {
+      var W = window.innerWidth,
+        H = window.innerHeight,
+        M = W < 760,
+        GAP = M ? 560 : 700,
+        travel = p * (K * GAP + 700) - 150;
+      tq.forEach(function (el, k) {
+        var z = -k * GAP - 420 + travel,
+          side = k % 2 ? 1 : -1;
+        var x = side * (M ? W * .05 : W * .19) + jit[k].x * (M ? 20 : 80),
+          y = jit[k].y * (M ? H * .08 : H * .16) + (M ? H * .04 : 0);
+        var o = z < -3000 ? 0 : z < -1900 ? (z + 3000) / 1100 : z > 160 ? Math.max(0, 1 - (z - 160) / 320) : 1;
+        el.style.opacity = o.toFixed(3);
+        el.style.visibility = o < .01 ? 'hidden' : 'visible';
+        el.style.transform = 'translate3d(calc(-50% + ' + x.toFixed(1) + 'px), calc(-50% + ' + y.toFixed(1) + 'px), ' + z.toFixed(1) + 'px)';
+      });
+    }
+    var tunST = ScrollTrigger.create({
+      trigger: tun,
+      start: 'top top',
+      end: '+=440%',
+      pin: true,
+      refreshPriority: 2,
+      anticipatePin: 1,
+      onUpdate: function (s) {
+        placeTunnel(s.progress);
+      },
+      onRefresh: function (s) {
+        placeTunnel(s.progress);
+      }
+    });
+    placeTunnel(0);
+    var cmp = document.getElementById('cmp3'),
+      labs = [].slice.call(cmp.querySelectorAll('.lab')),
+      one = cmp.querySelector('.one3');
+    function placeCompare() {
+      var L = layout();
+      labs.forEach(function (el, i) {
+        el.style.left = L.W / 2 + L.three.xs[i] + 'px';
+        el.style.top = L.H / 2 - L.three.y + L.three.r + 18 + 'px';
+      });
+      one.style.top = L.H / 2 - L.one.y + L.one.S / 2 + 20 + 'px';
+    }
+    var ctl = gsap.timeline({
+      scrollTrigger: {
+        trigger: cmp,
+        start: 'top top',
+        end: '+=170%',
+        pin: true,
+        scrub: .5,
+        refreshPriority: 1,
+        anticipatePin: 1
+      }
+    });
+    ctl.fromTo(labs, {
+      opacity: 1,
+      y: 0
+    }, {
+      opacity: 0,
+      y: -12,
+      duration: .1,
+      immediateRender: false
+    }, .32).fromTo(one, {
+      opacity: 0,
+      y: 18
+    }, {
+      opacity: 1,
+      y: 0,
+      duration: .14
+    }, .64).to({}, {
+      duration: .22
+    }, .78);
+    var cmpST = ctl.scrollTrigger;
+    placeCompare();
+    gsap.fromTo('.cmp tbody tr', {
+      opacity: 0,
+      y: 14
+    }, {
+      opacity: 1,
+      y: 0,
+      stagger: .06,
+      duration: .5,
+      scrollTrigger: {
+        trigger: '.cmp',
+        start: 'top 85%'
+      }
+    });
+    gsap.fromTo('.plan', {
+      opacity: 0,
+      y: 44
+    }, {
+      opacity: 1,
+      y: 0,
+      stagger: .12,
+      duration: .8,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.plans',
+        start: 'top 85%'
+      }
+    });
+    gsap.fromTo('#closeTitle', {
+      '--wd': 62
+    }, {
+      '--wd': 100,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#close',
+        start: 'top 85%',
+        end: 'center 60%',
+        scrub: true
+      }
+    });
+    var eng = null;
+    try {
+      eng = Signal(document.getElementById('sig'));
+    } catch (err) {
+      console.warn('[signal] field off:', err && err.message);
+      eng = null;
+    }
+    if (!eng) document.getElementById('sig').style.display = 'none';
+    function centerY(el) {
+      var r = el.getBoundingClientRect();
+      return r.top + window.scrollY + r.height / 2 - window.innerHeight / 2;
+    }
+    function computeStops() {
+      var H = window.innerHeight,
+        max = ScrollTrigger.maxScroll(window),
+        s = [{
+          y: 0,
+          f: 'cloud'
+        }];
+      ['ch-2', 'ch-3', 'ch-4', 'ch-5', 'ch-6', 'ch-k10', 'ch-free'].forEach(function (id) {
+        var el = document.getElementById(id);
+        s.push({
+          y: centerY(el),
+          f: el.getAttribute('data-f')
+        });
+      });
+      if (prismST) {
+        s.push({
+          y: prismST.start,
+          f: 'dust'
+        });
+        s.push({
+          y: prismST.end,
+          f: 'dust'
+        });
+      } else {
+        var r = prismSec.getBoundingClientRect();
+        s.push({
+          y: r.top + window.scrollY - H * .3,
+          f: 'dust'
+        });
+        s.push({
+          y: r.bottom + window.scrollY - H,
+          f: 'dust'
+        });
+      }
+      s.push({
+        y: tunST.start,
+        f: 'alone'
+      });
+      s.push({
+        y: tunST.end,
+        f: 'alone'
+      });
+      var L = cmpST.end - cmpST.start;
+      s.push({
+        y: cmpST.start + L * .3,
+        f: 'three'
+      });
+      s.push({
+        y: cmpST.start + L * .62,
+        f: 'one'
+      });
+      s.push({
+        y: cmpST.end,
+        f: 'one'
+      });
+      s.push({
+        y: cmpST.end + H * .6,
+        f: 'dust'
+      });
+      var yClose = Math.min(max, centerY(document.getElementById('close')));
+      s.push({
+        y: yClose,
+        f: 'markClose'
+      });
+      s.sort(function (a, b) {
+        return a.y - b.y;
+      });
+      for (var i = 1; i < s.length; i++) if (s[i].y <= s[i - 1].y) s[i].y = s[i - 1].y + 1;
+      if (eng) {
+        var card = document.getElementById('readyCard'),
+          ch = document.getElementById('ch-5');
+        var rc = card.getBoundingClientRect(),
+          ys = centerY(ch),
+          top = rc.top - (parseFloat(gsap.getProperty(card, 'y')) || 0) + window.scrollY - ys;
+        eng.setCardRect({
+          x: rc.left + rc.width / 2 - window.innerWidth / 2,
+          y: H / 2 - (top + rc.height / 2),
+          w: rc.width,
+          h: rc.height
+        });
+        var W = window.innerWidth,
+          ht = document.getElementById('closeTitle').getBoundingClientRect(),
+          htTop = ht.top + window.scrollY - yClose;
+        var S = Math.max(64, Math.min(htTop - 60 - 44, W * (W < 760 ? .3 : .13), H * .22));
+        eng.setCloseMark({
+          x: ht.left + S / 2 - W / 2,
+          y: H / 2 - (htTop - 26 - S / 2),
+          S: S
+        });
+        eng.setStops(s);
+      }
+    }
+    ScrollTrigger.addEventListener('refresh', function () {
+      placeCompare();
+      computeStops();
+    });
+    var rt;
+    window.addEventListener('resize', function () {
+      clearTimeout(rt);
+      rt = setTimeout(function () {
+        if (eng) eng.resize();
+      }, 200);
+    });
+    if (document.fonts && document.fonts.load) document.fonts.load('800 100px Archivo').then(function () {
+      if (eng) eng.rebuild();
+      ScrollTrigger.refresh();
+    }).catch(function () {});
+    window.addEventListener('load', function () {
+      ScrollTrigger.refresh();
+    });
+    root.classList.add('fx-on');
+    ScrollTrigger.refresh();
+  } catch (err) {
+    console.error('[signal] choreography off:', err);
+    try {
+      ScrollTrigger.getAll().forEach(function (s) {
+        s.kill(true);
+      });
+    } catch (e) {}
+    root.classList.remove('fx');
+    root.classList.remove('fx-on');
+  }
+})();
+</script>
